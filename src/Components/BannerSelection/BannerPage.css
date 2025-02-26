@@ -1,0 +1,40 @@
+/* BannerPage.css */
+
+.signature-preview {
+    min-height: 150px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+  }
+  
+  /* Animation for the banner selection cards */
+  .card {
+    transition: transform 0.2s ease, border 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Selected banner indicator */
+  .badge.bg-success {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Hero section styling */
+  .banner-hero {
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Make banner images consistent */
+  .card img {
+    height: 80px;
+    object-fit: cover;
+  }
