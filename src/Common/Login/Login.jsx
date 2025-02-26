@@ -3,6 +3,7 @@ import "./Login.css";
 import Loginimg from "../../assets/Login/login.jpg";
 import Microsoftimg from "../../assets/Login/Microsoft_logo.svg.png";
 import Fbimg from "../../assets/Login/fblogo.webp";
+import { Link } from "react-router-dom";
 
 function Login() {
   return (
@@ -16,10 +17,12 @@ function Login() {
               <h1 className="login-title">Sign in to Agile Signature</h1>
 
               {/* <!-- Social Login Buttons --> */}
+              {/* <Link to="/blockspage"> */}
               <a href="#" className="social-btn btn-google">
                 <img src={Microsoftimg} alt="" className="me-2" width="20" />
                 Continue with Microsoft
               </a>
+              {/* </Link> */}
               <a href="#" className="social-btn btn-facebook">
                 <img src={Fbimg} alt="" className="me-2 fb-logo" width="20" />
                 Continue with Facebook
