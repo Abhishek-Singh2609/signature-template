@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { useState } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HeaderSection from './HeaderSection/HeaderSection';
 import HeroSection from './HeroSection/HeroSection';
@@ -12,32 +13,34 @@ import Navbar from './Common/Navbar/Navbar';
 import Trial from './Components/TrialPage/Trial';
 import BannerPage from './Components/BannerSelection/BannerPage';
 
-function LayoutWrapper() {
+function App() {
   const location = useLocation();
-  const hideLayout = location.pathname === "/login" || location.pathname === "/blockspage";
+  const hideLayout = location.pathname === "/login" || location.pathname === "/blockspage"; // Hide navbar & footer
 
   return (
     <>
-      {!hideLayout && <Navbar />}
+      {/* < Navbar/>
+      <Home />    
+      <Demo />  
+      <Footer /> */}
+      
+       {!hideLayout && <Navbar />} 
+      
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/demo" element={<Demo />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/blockspage" element={<BlocksPage />} />
-        <Route path="/trial" element={<Trial />} />
-        <Route path="/banner" element={<BannerPage />} />
+        <Route path="/" element={<Home/>} />
+        <Route path="/demo" element={<Demo/>} />
+        <Route path="/login" element={<Login/> } />
+        <Route path="/blockspage" element={ <BlocksPage />  } />
+        <Route path="/trial" element={ <Trial />  } />
+        <Route path="/banner" element={ <BannerPage />  } />
+
+       
       </Routes>
+      
       {!hideLayout && <Footer />}
+  
     </>
-  );
+  )
 }
 
-function App() {
-  return (
-    <Router>
-      <LayoutWrapper />
-    </Router>
-  );
-}
-
-export default App;
+export default App
