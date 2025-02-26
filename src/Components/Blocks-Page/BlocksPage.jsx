@@ -595,7 +595,7 @@ function BlocksPage() {
                   <p
                     className="mb-1"
                     style={{ fontFamily: "Playfair Display, serif" }}
-                    
+
                   >
                     Bella Cucina Ristorante
                   </p>
