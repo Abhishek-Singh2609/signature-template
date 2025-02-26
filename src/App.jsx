@@ -12,6 +12,7 @@ import BlocksPage from './Components/Blocks-Page/BlocksPage';
 import Navbar from './Common/Navbar/Navbar';
 import Trial from './Components/TrialPage/Trial';
 import BannerPage from './Components/BannerSelection/BannerPage';
+import EditTemplate from './Components/EditTemplate/EditTemplate';
 
 function App() {
   const location = useLocation();
@@ -33,6 +34,7 @@ function App() {
         <Route path="/blockspage" element={ <BlocksPage />  } />
         <Route path="/trial" element={ <Trial />  } />
         <Route path="/banner" element={ <BannerPage />  } />
+        <Route path="/edittemplate" element={  <EditTemplate/>  } />
 
        
       </Routes>
