@@ -11,18 +11,18 @@ function Login() {
       <div className="container-fluid">
         <div className="row login-container">
           {/* <!-- Left Side --> */}
-          <div className="col-md-12 d-flex align-items-center justify-content-center">
+          <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="login-box">
             <div className="login-left">
               <h1 className="login-title">Sign in to Agile Signature</h1>
 
               {/* <!-- Social Login Buttons --> */}
-              {/* <Link to="/blockspage"> */}
+              <Link to="/blockspage">
               <a href="#" className="social-btn btn-google">
                 <img src={Microsoftimg} alt="" className="me-2" width="20" />
                 Continue with Microsoft
               </a>
-              {/* </Link> */}
+              </Link>
               <a href="#" className="social-btn btn-facebook">
                 <img src={Fbimg} alt="" className="me-2 fb-logo" width="20" />
                 Continue with Facebook
@@ -39,7 +39,7 @@ function Login() {
                   type="email"
                   className="form-control"
                   placeholder="Email"
-                  required="true"
+                  // required="true"
                 />
                 {/* <div className="form-label">Email Is Required</div> */}
 
@@ -47,13 +47,15 @@ function Login() {
                   type="password"
                   className="form-control"
                   placeholder="Password"
-                  required="true"
+                  // required="true"
                 />
                 {/* <div className="form-label">Password Is Required</div> */}
 
+                <Link to="/blockspage">
                 <button type="submit" className="btn btn-signin">
                   Sign in
                 </button>
+                </Link>
               </form>
 
               <div className="links">
@@ -68,11 +70,6 @@ function Login() {
             </div>
             </div>
           </div>
-
-          {/* <!-- Right Side --> */}
-          {/* <div className="col-md-6 login-right">
-            <img src={Loginimg} alt="" className="login-image" />
-          </div> */}
         </div>
       </div>
     </>

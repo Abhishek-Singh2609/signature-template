@@ -6,15 +6,14 @@ function HeroSection() {
   return (
     <div>
         
-        <div className="bg-white py-5" style={{ backgroundImage: 'url(/path/to/image.jpg)', backgroundSize: 'cover' }}>
+        <div className=" py-5">
   <div className="container">
     <div className="text-center">
       <h2 className="mb-4 custom-heading">
-        Why <span className='span-text'>Agile</span> Email <br /> Signature Software?
+      Discover the Benefits of <span className='span-text'>Agile</span> Email <br /> Signature Software Solution
       </h2>
-      <p className="lead text-secondary mb-4 custom-para">
-        Agile Email Signature is the world-leading centrally managed solution for email<br />
-        signatures for <span className="para-text">Microsoft 365,</span> Google Workspace, Microsoft Exchange, and HCL Domino.
+      <p className="lead text-secondary custom-para">
+      Agile Email Signature is the premier, centrally managed solution for <br /> email signatures, seamlessly integrated with <span className="para-text">Microsoft 365</span> <br />
       </p>
     </div>
   </div>
@@ -30,29 +29,36 @@ function HeroSection() {
                         <div class="feature-item">
                             <div class="feature-icon">→</div>
                             <div>
-                                <h3 class="h5 mb-2">World's first enterprise private cloud solution</h3>
-                                <p class="text-muted mb-0">Secure, Consistent & Compliant signatures across all devices</p>
+                                <h3 class="h5 mb-2">Consistent Branding: Ensure uniform email signatures across all teams and devices</h3>
+                                <p class="text-muted mb-0">Enterprise-Grade Security: Keep communications secure with industry-leading standards</p>
                             </div>
                         </div>
                         
                         <div class="feature-item">
                             <div class="feature-icon">→</div>
                             <div>
-                                <h3 class="h5 mb-2">Powerful designer - dynamic designs & content</h3>
-                                <p class="text-muted mb-0">Drag and drop signature blocks, conditional fields & images</p>
+                                <h3 class="h5 mb-2">Compliance Made Easy: Stay aligned with global regulations effortlessly.</h3>
+                                <p class="text-muted mb-0">Centralized Management: Update and deploy signatures organization-wide in minutes</p>
                             </div>
                         </div>
                         
                         <div class="feature-item">
                             <div class="feature-icon">→</div>
                             <div>
-                                <h3 class="h5 mb-2">Use templates or design your own</h3>
-                                <p class="text-muted mb-0">Setup & design signatures to work on all devices</p>
+                                <h3 class="h5 mb-2">Scalable & Flexible: Designed to grow with your business needs</h3>
+                                <p class="text-muted mb-0">Device & Platform Compatibility: Works seamlessly across all email clients and devices</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">→</div>
+                            <div>
+                                <h3 class="h5 mb-2">Choose from professionally designed templates for quick and easy setup</h3>
+                                <p class="text-muted mb-0">Easy to Use: Intuitive interface for effortless creation and management.</p>
                             </div>
                         </div>
                     </div>
 
-                    <button class="btn btn-dark btn-lg px-4">Start Free Trial →</button>
+                    <button class="btn btn-dark btn-lg px-4"> Try it for Free for Next 30 days →</button>
                 </div>
                 <div class="col-lg-6">
                     <img src={Heroimg} alt="Email Signature Designer Interface" class="hero-image" />
