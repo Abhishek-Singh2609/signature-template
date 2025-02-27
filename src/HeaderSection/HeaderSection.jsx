@@ -14,7 +14,7 @@ const HeaderSection = () => {
           </div>
         <div className="text-center mt-5">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 hero-h1">
-          Email signatures  <br />with impact
+          Your Signature, Your Impact <br />  Impressions That Go Beyond the Inbox
           </h1>
           <p className="text-lg md:text-xl text-gray-600 mb-8 hero-p">
             The perfect enterprise email signature management solution to create consistent,<br />

@@ -11,12 +11,15 @@ import {
 } from "lucide-react";
 import "./Home.css"
 import tempimg from "../../assets/template_Img/user.jpg";
+import EmailMarketing from './Emailmarketing';
+import { Link } from 'react-router-dom';
 
 function Home() {
   return (
     <>
     <HeaderSection />
     <HeroSection /> 
+    <EmailMarketing />
     <div className="container py-4 mt-5">
         <h1 className="text-center mb-5 template-heading">Professional Email Signatures</h1>
 
@@ -466,6 +469,11 @@ function Home() {
             </div>
           </div>
         </div>
+      </div>
+      <div className='d-flex align-items-center justify-content-center my-3'>
+        <Link to="trial">
+        <button class="btn btn-dark btn-lg px-4"> Try it for Free for Next 30 days →</button>
+        </Link>
       </div>
     </>
   )

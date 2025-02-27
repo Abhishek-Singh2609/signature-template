@@ -9,8 +9,8 @@
   font-style: normal;
   font-weight: 600;
   color: rgb(0, 0, 0);
-  font-size: 88px;
-  line-height: 88px;
+  font-size: 57px;
+  /* line-height: 88px; */
 }
 .hero-p {
     font-family: "Inter", Arial, sans-serif;
@@ -22,7 +22,7 @@
   }
   .hero-image-container {
     margin: 0 auto; 
-    max-width: 800px; /* Set a maximum width for the image */
+    max-width: 900px; /* Set a maximum width for the image */
     width: 100%; /* Ensure it takes full width up to the max-width */
     transition: transform 0.4s ease-in-out, box-shadow 0.3s ease-in-out;
     /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */

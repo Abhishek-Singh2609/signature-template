@@ -9,7 +9,7 @@ const Footer = () => {
             <div class="row">
                 {/* <!-- JOIN EXCLAIMER Column --> */}
                 <div class="col-md-6 col-lg-2 footer-column">
-                    <h3>JOIN EXCLAIMER</h3>
+                    <h3>JOIN AGILE</h3>
                     <ul>
                         <li><a href="#">Start a free trial</a></li>
                         <li><a href="#">Get a demo</a></li>

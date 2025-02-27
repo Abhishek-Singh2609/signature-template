@@ -28,8 +28,8 @@
     font-style: normal;
     font-weight: 600;
     color: rgb(0, 0, 0);
-    font-size: 88px;
-    line-height: 88px;
+    font-size: 57px;
+    /* line-height: 88px; */
   }
   @media (max-width: 480px) {
     .template-heading{

@@ -8,8 +8,8 @@ function Demo() {
     <div className="container">
     <div className="form-wrapper d-flex align-items-center justify-content-center mb-2">
     <div className="form-container p-4 shadow-lg rounded bg-white">
-        <h1 className="title">Schedule a <span>Demo</span></h1>
-        <p className="subtitle">Fill in your details & our Sales Team will be in touch to organise your demo.</p>
+        <h1 className="title">Schedule a <span>Demo</span>Today</h1>
+        <p className="subtitle">Enter your details, and our Sales Team will contact you to schedule your demo. </p>
 
         <form>
             <div className="row">
@@ -72,7 +72,7 @@ function Demo() {
                     {/* <!-- Newsletter Opt-in --> */}
                     <div className="col-6">
                         <label className="form-label required">
-                            Would you like to receive occasional emails with Agile Mail Signature updates and news? You can opt out of these at any time
+                        Would you be interested in receiving occasional emails with updates and news about Agile Mail Signature? You can unsubscribe at any time.
                         </label>
                         <div className="radio-group">
                             <label>
@@ -141,13 +141,13 @@ function Demo() {
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
-                    What is Agile Email Signature?
+                Why do your Organisation Need Agile Email Signature ?  
                 </button>
             </h2>
             <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
                 <div class="accordion-body">
-                    <p>Agile Email Signature is an email signature application that simplifies the creation and maintenance of company email signatures. Sleek, compliant, and personalized email signatures are automatically added to each email, no matter what device you're sending from.</p>
-                    <p>Agile Email Signature works for Microsoft 365, Google Workspace, Microsoft Exchange, HCL Domino.</p>
+                    <p>Agile Email Signature offers a streamlined and customizable way to manage and standardize email signatures across your organization. It ensures consistency, enhances brand identity, and provides a professional appearance in every email. Additionally, it can include important information like social media links, disclaimers, and promotions, helping your business maintain a cohesive and effective communication strategy.</p>
+                    <p>Plus, it can be easily managed from a central platform, saving time and effort for IT and marketing teams.</p>
                 </div>
             </div>
         </div>

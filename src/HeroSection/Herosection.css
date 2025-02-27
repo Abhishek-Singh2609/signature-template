@@ -67,8 +67,8 @@
     font-style: normal; /* Font style */
     font-weight: 600; /* Font weight */
     color: rgb(0, 0, 0); /* Text color */
-    font-size: 92px; /* Font size */
-    line-height: 101px; /* Line height */
+    font-size: 57px; /* Font size */
+    /* line-height: 101px;  */
   }
   
   /* Responsive adjustments for smaller screens */
