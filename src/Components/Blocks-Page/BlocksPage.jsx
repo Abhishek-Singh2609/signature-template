@@ -1,4 +1,9 @@
+
 import React, { useState } from "react";
+=======
+/* eslint-disable react/no-unescaped-entities */
+import { useState } from "react";
+
 import "bootstrap-icons/font/bootstrap-icons.min.css";
 import "./BlocksPage.css";
 import {
@@ -11,9 +16,22 @@ import {
 } from "lucide-react";
 import tempimg from "../../assets/template_Img/user.jpg";
 
+
 function BlocksPage() {
   // Add state to track which card is being hovered
   const [hoveredCard, setHoveredCard] = useState(null);
+
+import { useNavigate } from "react-router-dom";
+
+function BlocksPage() {
+  const [hoveredCard, setHoveredCard] = useState(null);
+
+  const navigate = useNavigate(); 
+
+  const handleCardClick = (signature) => {
+    navigate(`/edittemplate`, { state: { signature } }); 
+  };
+
 
   return (
     <>
@@ -46,6 +64,10 @@ function BlocksPage() {
               }}
               onMouseEnter={() => setHoveredCard(1)}
               onMouseLeave={() => setHoveredCard(null)}
+
+=======
+              onClick={() => handleCardClick({ name: "Ryan Mitchell", title: "Lead DevOps Engineer", company: "CloudTech Solutions" })}
+
             >
               <div className="d-flex align-items-center gap-3">
                 <div className="text-white">
@@ -96,6 +118,10 @@ function BlocksPage() {
               }}
               onMouseEnter={() => setHoveredCard(2)}
               onMouseLeave={() => setHoveredCard(null)}
+
+=======
+              onClick={() => handleCardClick({ name: "Isabella Romano", title: "Executive Chef & Owner", company: "Bella Cucina Ristorante" })}
+
             >
               <div className="d-flex flex-row align-items-center gap-4">
                 <div className="text-center">
@@ -139,6 +165,10 @@ function BlocksPage() {
               }}
               onMouseEnter={() => setHoveredCard(3)}
               onMouseLeave={() => setHoveredCard(null)}
+
+=======
+              onClick={() => handleCardClick({ name: "Dr. Marcus Wei", title: "Psychology", company: "Mental Wellness Center" })}
+
             >
               <div className="row g-0">
                 <div className="col-8 ps-3">
@@ -186,6 +216,10 @@ function BlocksPage() {
               }}
               onMouseEnter={() => setHoveredCard(4)}
               onMouseLeave={() => setHoveredCard(null)}
+
+=======
+              onClick={() => handleCardClick({ name: "Jorden Smith", title: "CTO", company: "T&M Corporate Properties" })}
+
             >
               <div className="d-flex align-items-center gap-3">
                 <div className="company-logo" style={{ width: 100 }}>
@@ -234,6 +268,10 @@ function BlocksPage() {
               }}
               onMouseEnter={() => setHoveredCard(5)}
               onMouseLeave={() => setHoveredCard(null)}
+
+=======
+              onClick={() => handleCardClick({ name: "Alex Perez", title: "Account Executive", company: "Brandity" })}
+
             >
               <div className="d-flex align-items-center gap-3">
                 <div>
@@ -284,6 +322,10 @@ function BlocksPage() {
               }}
               onMouseEnter={() => setHoveredCard(6)}
               onMouseLeave={() => setHoveredCard(null)}
+
+=======
+              onClick={() => handleCardClick({ name: "Lauren Ipsum", title: "Accountant", company: "Finance Mile" })}
+
             >
               <div className="d-flex align-items-center gap-3">
                 <div
@@ -334,6 +376,10 @@ function BlocksPage() {
               }}
               onMouseEnter={() => setHoveredCard(7)}
               onMouseLeave={() => setHoveredCard(null)}
+
+=======
+              onClick={() => handleCardClick({ name: "Casie Smith", title: "Head of Marketing", company: "AV Media" })}
+
             >
               <div className="d-flex align-items-center gap-3">
                 <div
@@ -393,6 +439,10 @@ function BlocksPage() {
               }}
               onMouseEnter={() => setHoveredCard(8)}
               onMouseLeave={() => setHoveredCard(null)}
+
+=======
+              onClick={() => handleCardClick({ name: "Lauren Ipsum", title: "Accountant", company: "Finance Mile" })}
+
             >
               <div className="d-flex align-items-center gap-3">
                 <div
@@ -439,6 +489,10 @@ function BlocksPage() {
               }}
               onMouseEnter={() => setHoveredCard(9)}
               onMouseLeave={() => setHoveredCard(null)}
+
+=======
+              onClick={() => handleCardClick({ name: "Mona Hinson", title: "Potter", company: "Mona's Cups" })}
+
             >
               <div className="text-center mb-3">
                 <h3 className="signature-script mb-3">Mr. John</h3>
