@@ -1,5 +1,6 @@
-/* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import "bootstrap-icons/font/bootstrap-icons.min.css";
 import "./BlocksPage.css";
 import {
@@ -11,11 +12,10 @@ import {
   Github,
 } from "lucide-react";
 import tempimg from "../../assets/template_Img/user.jpg";
-import { useNavigate } from "react-router-dom";
 
 function BlocksPage() {
+  // Add state to track which card is being hovered
   const [hoveredCard, setHoveredCard] = useState(null);
-
   const navigate = useNavigate(); 
 
   const handleCardClick = (signature) => {
@@ -25,6 +25,7 @@ function BlocksPage() {
   return (
     <>
       <div className="blocks-page-container">
+        {/* Header */}
         <header className="header d-flex align-items-center justify-content-between">
           <h2 className="block-heading">Agile Signature</h2>
           <div className="d-flex align-items-center gap-3">
@@ -48,7 +49,8 @@ function BlocksPage() {
               className="card p-3 position-relative"
               style={{
                 background: "linear-gradient(135deg, #1a237e 0%, #0d47a1 100%)",
-                border: hoveredCard === 1 ? "3px solid #0d6efd" : "",cursor: "pointer",
+                border: hoveredCard === 1 ? "3px solid #0d6efd" : "",
+                cursor: "pointer",
               }}
               onMouseEnter={() => setHoveredCard(1)}
               onMouseLeave={() => setHoveredCard(null)}
@@ -114,7 +116,6 @@ function BlocksPage() {
                   <p
                     className="mb-1"
                     style={{ fontFamily: "Playfair Display, serif" }}
-
                   >
                     Bella Cucina Ristorante
                   </p>
@@ -181,7 +182,6 @@ function BlocksPage() {
                   </div>
                 </div>
               </div>
-        
             </div>
           </div>
 
@@ -229,7 +229,6 @@ function BlocksPage() {
                   <small>🌐 www.tmcorporateproperties.com</small>
                 </p>
               </div>
-          
             </div>
           </div>
 
@@ -332,7 +331,6 @@ function BlocksPage() {
                   <small>🌐 www.brandity.com</small>
                 </p>
               </div>
-            
             </div>
           </div>
 
@@ -341,8 +339,8 @@ function BlocksPage() {
             <div
               className="card p-3 position-relative"
               style={{ 
-                border: hoveredCard === 7 ? "3px solid #0d6efd" : "",cursor: "pointer",
-              
+                border: hoveredCard === 7 ? "3px solid #0d6efd" : "",
+                cursor: "pointer",
               }}
               onMouseEnter={() => setHoveredCard(7)}
               onMouseLeave={() => setHoveredCard(null)}
@@ -391,7 +389,6 @@ function BlocksPage() {
                   <small>🌐 www.avmedia.com</small>
                 </p>
               </div>
-
             </div>
           </div>
 
