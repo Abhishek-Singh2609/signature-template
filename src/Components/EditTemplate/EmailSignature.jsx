@@ -27,13 +27,33 @@ const EmailSignatureCreator = () => {
     banner: null,
     disclaimer: "",
     campaigns: [
-      { id: 1, name: "Campaign 1", image: null, expiryDate: "", active: false },
-      { id: 2, name: "Campaign 2", image: null, expiryDate: "", active: false },
-      { id: 3, name: "Campaign 3", image: null, expiryDate: "", active: false },
-      { id: 4, name: "Campaign 4", image: null, expiryDate: "", active: false },
-      { id: 5, name: "Campaign 5", image: null, expiryDate: "", active: false },
+      { id: 1, name: "Campaign 1", image: null, startDate: "", expiryDate: "", active: false, links: [
+        { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
+        { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
+        { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
+      ] },
+      { id: 2, name: "Campaign 2", image: null, startDate: "", expiryDate: "", active: false, links: [
+        { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
+        { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
+        { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
+      ] },
+      { id: 3, name: "Campaign 3", image: null, startDate: "", expiryDate: "", active: false, links: [
+        { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
+        { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
+        { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
+      ] },
+      { id: 4, name: "Campaign 4", image: null, startDate: "", expiryDate: "", active: false, links: [
+        { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
+        { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
+        { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
+      ] },
+      { id: 5, name: "Campaign 5", image: null, startDate: "", expiryDate: "", active: false, links: [
+        { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
+        { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
+        { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
+      ] },
     ],
-    activeCampaign: null,
+    activeCampaigns: [],
   })
 
   const handleInputChange = (e) => {
@@ -129,6 +149,32 @@ const EmailSignatureCreator = () => {
     }))
   }
 
+  const handleCampaignStartDateChange = (id, value) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      campaigns: prevState.campaigns.map((campaign) => 
+        campaign.id === id ? { ...campaign, startDate: value } : campaign
+      )
+    }))
+  }
+
+  const handleCampaignLinkChange = (campaignId, linkIndex, field, value) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      campaigns: prevState.campaigns.map((campaign) => {
+        if (campaign.id === campaignId) {
+          const updatedLinks = [...campaign.links];
+          updatedLinks[linkIndex] = {
+            ...updatedLinks[linkIndex],
+            [field]: value
+          };
+          return { ...campaign, links: updatedLinks };
+        }
+        return campaign;
+      })
+    }))
+  }
+
   const removeCampaignImage = (id) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -140,44 +186,52 @@ const EmailSignatureCreator = () => {
 
   const toggleCampaignActive = (id) => {
     setFormData((prevState) => {
-      // First deactivate all campaigns
-      const updatedCampaigns = prevState.campaigns.map(campaign => ({
-        ...campaign,
-        active: false
-      }))
+      // Get the campaign to toggle
+      const campaign = prevState.campaigns.find(c => c.id === id);
       
-      // Then activate the selected one if it wasn't already active
-      const wasActive = prevState.campaigns.find(c => c.id === id)?.active
+      // Update campaigns array with toggled active state for the selected campaign
+      const updatedCampaigns = prevState.campaigns.map(campaign => 
+        campaign.id === id ? { ...campaign, active: !campaign.active } : campaign
+      );
       
-      if (!wasActive) {
-        const campaignToActivate = updatedCampaigns.find(c => c.id === id)
-        if (campaignToActivate) {
-          campaignToActivate.active = true
-        }
-      }
+      // Get list of active campaign IDs
+      const activeCampaignIds = updatedCampaigns
+        .filter(c => c.active)
+        .map(c => c.id);
       
       return {
         ...prevState,
         campaigns: updatedCampaigns,
-        activeCampaign: wasActive ? null : id
+        activeCampaigns: activeCampaignIds
       }
     })
   }
 
-  // Check if campaign is expired
-  const isCampaignExpired = (expiryDate) => {
-    if (!expiryDate) return false
-    const today = new Date()
-    const expiry = new Date(expiryDate)
-    return today > expiry
+  // Check if campaign is expired or not yet started
+  const isCampaignExpired = (expiryDate, startDate) => {
+    const today = new Date();
+    
+    // Check if campaign has not started yet
+    if (startDate) {
+      const start = new Date(startDate);
+      if (today < start) return true; // Not yet started
+    }
+    
+    // Check if campaign has expired
+    if (expiryDate) {
+      const expiry = new Date(expiryDate);
+      if (today > expiry) return true; // Expired
+    }
+    
+    return false; // Campaign is active
   }
 
-  // Get active campaign
-  const getActiveCampaign = () => {
-    const activeCampaign = formData.campaigns.find(campaign => 
-      campaign.active && campaign.image && !isCampaignExpired(campaign.expiryDate)
+  // Get active campaigns
+  const getActiveCampaigns = () => {
+    const activeCampaigns = formData.campaigns.filter(campaign => 
+      campaign.active && campaign.image && !isCampaignExpired(campaign.expiryDate, campaign.startDate)
     )
-    return activeCampaign
+    return activeCampaigns
   }
 
   // Design templates - expanded with more aesthetic options
@@ -583,20 +637,20 @@ const EmailSignatureCreator = () => {
       case "Banner & Disclaimer":
         return (
           <div className="form">
-            <div className="campaign-banners-section">
+            <div className="campaign-banners-section" style={{ marginTop: "10px" }}>
               <h3 style={{ marginBottom: "15px" }}>Campaign Banners</h3>
-              <p style={{ marginBottom: "15px", fontSize: "14px", color: "#666" }}>
-                Upload up to 5 campaign banners. Set an expiry date for each campaign. 
-                Only one campaign can be active at a time.
-              </p>
               
               {formData.campaigns.map((campaign) => (
                 <div key={campaign.id} className="campaign-item" style={{ 
+                  marginBottom: "20px", 
+                  padding: "15px", 
+                  border: "1px solid #ddd", 
+                  borderRadius: "8px",
                   backgroundColor: campaign.active ? "rgba(52, 152, 219, 0.1)" : "transparent",
                   borderColor: campaign.active ? "#3498db" : "#ddd"
                 }}>
-                  <div className="campaign-form-row">
-                    <div className="campaign-form-group">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" }}>
+                    <div className="form-group" style={{ margin: "0", flex: "2", marginRight: "10px" }}>
                       <label htmlFor={`campaign-name-${campaign.id}`}>Campaign Name</label>
                       <input
                         type="text"
@@ -611,7 +665,24 @@ const EmailSignatureCreator = () => {
                         }}
                       />
                     </div>
-                    <div className="campaign-form-group">
+                    
+                    <div className="form-group" style={{ margin: "0", flex: "1.5", marginRight: "10px" }}>
+                      <label htmlFor={`campaign-start-${campaign.id}`}>Start Date</label>
+                      <input
+                        type="date"
+                        id={`campaign-start-${campaign.id}`}
+                        value={campaign.startDate}
+                        onChange={(e) => handleCampaignStartDateChange(campaign.id, e.target.value)}
+                        style={{
+                          width: "100%",
+                          padding: "8px",
+                          borderRadius: "4px",
+                          border: "1px solid #ddd",
+                        }}
+                      />
+                    </div>
+                    
+                    <div className="form-group" style={{ margin: "0", flex: "1.5" }}>
                       <label htmlFor={`campaign-expiry-${campaign.id}`}>Expiry Date</label>
                       <input
                         type="date"
@@ -628,90 +699,165 @@ const EmailSignatureCreator = () => {
                     </div>
                   </div>
                   
-                  <div className="campaign-upload-container">
-                    {campaign.image ? (
-                      <div className="image-preview-container" style={{ position: "relative" }}>
-                        <img
-                          src={campaign.image}
-                          alt={`Campaign ${campaign.id}`}
-                          className="image-preview"
-                          style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
-                        />
-                        <button
-                          className="remove-image-btn"
-                          onClick={() => removeCampaignImage(campaign.id)}
+                  <div style={{ display: "flex", marginTop: "10px" }}>
+                    <div className="image-upload-container" style={{ flex: "1", marginRight: "15px" }}>
+                      {campaign.image ? (
+                        <div className="image-preview-container" style={{ position: "relative" }}>
+                          <img
+                            src={campaign.image}
+                            alt={`Campaign ${campaign.id}`}
+                            className="image-preview"
+                            style={{ width: "100%", height: "auto", maxHeight: "150px", objectFit: "cover" }}
+                          />
+                          <button
+                            className="remove-image-btn"
+                            onClick={() => removeCampaignImage(campaign.id)}
+                            style={{
+                              position: "absolute",
+                              top: "0",
+                              right: "0",
+                              background: "rgba(0,0,0,0.5)",
+                              color: "white",
+                              border: "none",
+                              borderRadius: "50%",
+                              width: "24px",
+                              height: "24px",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            <FaTimes size={12} />
+                          </button>
+                        </div>
+                      ) : (
+                        <div
+                          className="upload-placeholder"
+                          onClick={() => document.getElementById(`campaign-upload-${campaign.id}`).click()}
                           style={{
-                            position: "absolute",
-                            // top: "0",
-                            // right: "0",
-                            background: "rgba(0,0,0,0.5)",
-                            color: "white",
-                            border: "none",
-                            borderRadius: "50%",
-                            width: "24px",
-                            height: "24px",
+                            width: "100%",
+                            height: "150px",
+                            border: "2px dashed #ddd",
+                            borderRadius: "4px",
                             display: "flex",
+                            flexDirection: "column",
                             alignItems: "center",
                             justifyContent: "center",
                             cursor: "pointer",
                           }}
                         >
-                          <FaTimes size={12} />
-                        </button>
-                      </div>
-                    ) : (
-                      <div
-                        className="upload-placeholder"
-                        onClick={() => document.getElementById(`campaign-upload-${campaign.id}`).click()}
-                        style={{
-                          width: "100%",
-                          height: "100px",
-                          border: "2px dashed #ddd",
+                          <span className="upload-icon">🖼️</span>
+                          <span>Upload Campaign Banner</span>
+                        </div>
+                      )}
+                      <input
+                        id={`campaign-upload-${campaign.id}`}
+                        type="file"
+                        onChange={(e) => handleCampaignImageUpload(e, campaign.id)}
+                        accept="image/*"
+                        style={{ display: "none" }}
+                      />
+                    </div>
+                    
+                    <div style={{ flex: "1 1 15%" }}>
+                      <label style={{ display: "block", marginBottom: "8px", fontWeight: "500" }}>Banner Links (Clickable Areas)</label>
+                      
+                      {campaign.links.map((link, index) => (
+                        <div key={index} style={{ 
+                          marginBottom: "10px", 
+                          padding: "8px", 
+                          backgroundColor: "#f9f9f9", 
                           borderRadius: "4px",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                        }}
-                      >
-                        <span className="upload-icon">🖼️</span>
-                        <span>Upload Campaign Banner</span>
-                      </div>
-                    )}
-                    <input
-                      id={`campaign-upload-${campaign.id}`}
-                      type="file"
-                      onChange={(e) => handleCampaignImageUpload(e, campaign.id)}
-                      accept="image/*"
-                      style={{ display: "none" }}
-                    />
+                          border: "1px solid #eee"
+                        }}>
+                          <div style={{ display: "flex", alignItems: "center", marginBottom: "6px" }}>
+                            <div style={{ 
+                              width: "20px", 
+                              height: "20px", 
+                              borderRadius: "50%", 
+                              backgroundColor: index === 0 ? "#ff6b6b" : index === 1 ? "#51cf66" : "#339af0", 
+                              color: "white", 
+                              display: "flex", 
+                              alignItems: "center", 
+                              justifyContent: "center",
+                              marginRight: "8px",
+                              fontSize: "11px",
+                              fontWeight: "bold"
+                            }}>
+                              {index + 1}
+                            </div>
+                            <div style={{ flex: 1 }}>
+                              <input
+                                type="text"
+                                placeholder={`Link ${index + 1} Text`}
+                                value={link.text}
+                                onChange={(e) => handleCampaignLinkChange(campaign.id, index, 'text', e.target.value)}
+                                style={{
+                                  width: "100%",
+                                  padding: "6px",
+                                  borderRadius: "4px",
+                                  border: "1px solid #ddd",
+                                  fontSize: "13px"
+                                }}
+                              />
+                            </div>
+                          </div>
+                          <input
+                            type="url"
+                            placeholder="https://example.com"
+                            value={link.url}
+                            onChange={(e) => handleCampaignLinkChange(campaign.id, index, 'url', e.target.value)}
+                            style={{
+                              width: "100%",
+                              padding: "6px",
+                              borderRadius: "4px",
+                              border: "1px solid #ddd",
+                              fontSize: "13px"
+                            }}
+                          />
+                          <div style={{ 
+                            marginTop: "4px", 
+                            fontSize: "11px", 
+                            color: "#666",
+                            display: "flex",
+                            alignItems: "center"
+                          }}>
+                            {index === 0 ? "Left section" : index === 1 ? "Middle section" : "Right section"}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                   
-                  <div className="campaign-actions">
+                  <div style={{ marginTop: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <div style={{ fontSize: "14px", color: "#666" }}>
-                      {isCampaignExpired(campaign.expiryDate) ? (
-                        <span style={{ color: "red" }}>Expired</span>
+                      {isCampaignExpired(campaign.expiryDate, campaign.startDate) ? (
+                        <span style={{ color: "red" }}>
+                          {campaign.startDate && new Date() < new Date(campaign.startDate) 
+                            ? "Not started yet" 
+                            : "Expired"}
+                        </span>
                       ) : campaign.expiryDate ? (
-                        <span>Expires on: {new Date(campaign.expiryDate).toLocaleDateString()}</span>
+                        <span>Active until: {new Date(campaign.expiryDate).toLocaleDateString()}</span>
                       ) : (
                         <span>No expiry date set</span>
                       )}
                     </div>
                     <button
                       onClick={() => toggleCampaignActive(campaign.id)}
-                      disabled={!campaign.image || isCampaignExpired(campaign.expiryDate)}
+                      disabled={!campaign.image || isCampaignExpired(campaign.expiryDate, campaign.startDate)}
                       style={{
                         padding: "6px 12px",
                         backgroundColor: campaign.active ? "#2ecc71" : "#3498db",
                         color: "white",
                         border: "none",
                         borderRadius: "4px",
-                        cursor: campaign.image && !isCampaignExpired(campaign.expiryDate) ? "pointer" : "not-allowed",
-                        opacity: campaign.image && !isCampaignExpired(campaign.expiryDate) ? "1" : "0.5",
+                        cursor: campaign.image && !isCampaignExpired(campaign.expiryDate, campaign.startDate) ? "pointer" : "not-allowed",
+                        opacity: campaign.image && !isCampaignExpired(campaign.expiryDate, campaign.startDate) ? "1" : "0.5",
                       }}
                     >
-                      {campaign.active ? "Active" : "Activate"}
+                      {campaign.active ? "Deactivate" : "Activate"}
                     </button>
                   </div>
                 </div>
@@ -922,13 +1068,48 @@ const EmailSignatureCreator = () => {
               )}
             </div>
             
-            {(getActiveCampaign()?.image || formData.banner) && (
+            {(getActiveCampaigns().length > 0 || formData.banner) && (
               <div className="banner-container" style={{ marginTop: "10px", width: "100%" }}>
-                <img
-                  src={getActiveCampaign()?.image || formData.banner || "/placeholder.svg"}
-                  alt={getActiveCampaign()?.name || "Banner"}
-                  style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
-                />
+                {getActiveCampaigns().map((campaign) => (
+                  <div key={campaign.id} style={{ position: "relative", marginBottom: "5px" }}>
+                    <img
+                      src={campaign.image}
+                      alt={campaign.name}
+                      style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                    />
+                    {/* Clickable areas */}
+                    <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+                      {campaign.links.map((link, index) => (
+                        link.url && (
+                          <a 
+                            key={index}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title={link.text}
+                            style={{
+                              position: "absolute",
+                              left: `${link.area.x}%`,
+                              top: `${link.area.y}%`,
+                              width: `${link.area.width}%`,
+                              height: `${link.area.height}%`,
+                              display: "block",
+                              zIndex: 2,
+                              cursor: "pointer"
+                            }}
+                          />
+                        )
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                {formData.banner && (
+                  <img
+                    src={formData.banner}
+                    alt="Banner"
+                    style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                  />
+                )}
               </div>
             )}
             
@@ -1022,13 +1203,48 @@ const EmailSignatureCreator = () => {
           </div>
           <div className="centered-social">{renderSocialIcons()}</div>
           
-          {(getActiveCampaign()?.image || formData.banner) && (
-            <div className="banner-container" style={{ marginTop: "10px", width: "100%", textAlign: "center" }}>
-              <img
-                src={getActiveCampaign()?.image || formData.banner || "/placeholder.svg"}
-                alt={getActiveCampaign()?.name || "Banner"}
-                style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
-              />
+          {(getActiveCampaigns().length > 0 || formData.banner) && (
+            <div className="banner-container" style={{ marginTop: "10px", width: "100%" }}>
+              {getActiveCampaigns().map((campaign) => (
+                <div key={campaign.id} style={{ position: "relative", marginBottom: "5px" }}>
+                  <img
+                    src={campaign.image}
+                    alt={campaign.name}
+                    style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                  />
+                  {/* Clickable areas */}
+                  <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+                    {campaign.links.map((link, index) => (
+                      link.url && (
+                        <a 
+                          key={index}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title={link.text}
+                          style={{
+                            position: "absolute",
+                            left: `${link.area.x}%`,
+                            top: `${link.area.y}%`,
+                            width: `${link.area.width}%`,
+                            height: `${link.area.height}%`,
+                            display: "block",
+                            zIndex: 2,
+                            cursor: "pointer"
+                          }}
+                        />
+                      )
+                    ))}
+                  </div>
+                </div>
+              ))}
+              {formData.banner && (
+                <img
+                  src={formData.banner}
+                  alt="Banner"
+                  style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                />
+              )}
             </div>
           )}
           
@@ -1128,13 +1344,48 @@ const EmailSignatureCreator = () => {
               <div className="contact-right">{renderSocialIcons()}</div>
             </div>
             
-            {(getActiveCampaign()?.image || formData.banner) && (
+            {(getActiveCampaigns().length > 0 || formData.banner) && (
               <div className="banner-container" style={{ marginTop: "10px", width: "100%" }}>
-                <img
-                  src={getActiveCampaign()?.image || formData.banner || "/placeholder.svg"}
-                  alt={getActiveCampaign()?.name || "Banner"}
-                  style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
-                />
+                {getActiveCampaigns().map((campaign) => (
+                  <div key={campaign.id} style={{ position: "relative", marginBottom: "5px" }}>
+                    <img
+                      src={campaign.image}
+                      alt={campaign.name}
+                      style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                    />
+                    {/* Clickable areas */}
+                    <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+                      {campaign.links.map((link, index) => (
+                        link.url && (
+                          <a 
+                            key={index}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title={link.text}
+                            style={{
+                              position: "absolute",
+                              left: `${link.area.x}%`,
+                              top: `${link.area.y}%`,
+                              width: `${link.area.width}%`,
+                              height: `${link.area.height}%`,
+                              display: "block",
+                              zIndex: 2,
+                              cursor: "pointer"
+                            }}
+                          />
+                        )
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                {formData.banner && (
+                  <img
+                    src={formData.banner}
+                    alt="Banner"
+                    style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                  />
+                )}
               </div>
             )}
             
@@ -1253,13 +1504,48 @@ const EmailSignatureCreator = () => {
               <div className="contact-right">{renderSocialIcons()}</div>
             </div>
             
-            {(getActiveCampaign()?.image || formData.banner) && (
+            {(getActiveCampaigns().length > 0 || formData.banner) && (
               <div className="banner-container" style={{ marginTop: "10px", width: "100%" }}>
-                <img
-                  src={getActiveCampaign()?.image || formData.banner || "/placeholder.svg"}
-                  alt={getActiveCampaign()?.name || "Banner"}
-                  style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
-                />
+                {getActiveCampaigns().map((campaign) => (
+                  <div key={campaign.id} style={{ position: "relative", marginBottom: "5px" }}>
+                    <img
+                      src={campaign.image}
+                      alt={campaign.name}
+                      style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                    />
+                    {/* Clickable areas */}
+                    <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+                      {campaign.links.map((link, index) => (
+                        link.url && (
+                          <a 
+                            key={index}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title={link.text}
+                            style={{
+                              position: "absolute",
+                              left: `${link.area.x}%`,
+                              top: `${link.area.y}%`,
+                              width: `${link.area.width}%`,
+                              height: `${link.area.height}%`,
+                              display: "block",
+                              zIndex: 2,
+                              cursor: "pointer"
+                            }}
+                          />
+                        )
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                {formData.banner && (
+                  <img
+                    src={formData.banner}
+                    alt="Banner"
+                    style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                  />
+                )}
               </div>
             )}
             
@@ -1370,13 +1656,48 @@ const EmailSignatureCreator = () => {
           </div>
           <div className="contact-right">{renderSocialIcons()}</div>
         </div>
-        {(getActiveCampaign()?.image || formData.banner) && (
+        {(getActiveCampaigns().length > 0 || formData.banner) && (
           <div className="banner-container" style={{ marginTop: "10px", width: "100%" }}>
-            <img
-              src={getActiveCampaign()?.image || formData.banner || "/placeholder.svg"}
-              alt={getActiveCampaign()?.name || "Banner"}
-              style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
-            />
+            {getActiveCampaigns().map((campaign) => (
+              <div key={campaign.id} style={{ position: "relative", marginBottom: "5px" }}>
+                <img
+                  src={campaign.image}
+                  alt={campaign.name}
+                  style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                />
+                {/* Clickable areas */}
+                <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+                  {campaign.links.map((link, index) => (
+                    link.url && (
+                      <a 
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={link.text}
+                        style={{
+                          position: "absolute",
+                          left: `${link.area.x}%`,
+                          top: `${link.area.y}%`,
+                          width: `${link.area.width}%`,
+                          height: `${link.area.height}%`,
+                          display: "block",
+                          zIndex: 2,
+                          cursor: "pointer"
+                        }}
+                      />
+                    )
+                  ))}
+                </div>
+              </div>
+            ))}
+            {formData.banner && (
+              <img
+                src={formData.banner}
+                alt="Banner"
+                style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+              />
+            )}
           </div>
         )}
         {formData.disclaimer && (

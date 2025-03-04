@@ -17,7 +17,7 @@ import EmailSignatureCreator from './Components/EditTemplate/EmailSignature';
 function App() {
   const location = useLocation();
   const hideLayout = location.pathname === "/login" || location.pathname === "/blockspage"; // Hide navbar & footer
-  const hidenav = location.pathname === "/blockspage"
+  
   return (
     <>
       {/* < Navbar/>
@@ -25,7 +25,7 @@ function App() {
       <Demo />  
       <Footer /> */}
       
-       {!hidenav && <Navbar />} 
+       { <Navbar />} 
       
       <Routes>
         <Route path="/" element={<Home/>} />

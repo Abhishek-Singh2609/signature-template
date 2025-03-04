@@ -24,22 +24,7 @@ function BlocksPage() {
 
   return (
     <>
-      <div className="blocks-page-container">
-        {/* Header */}
-        <header className="header d-flex align-items-center justify-content-between">
-          <h2 className="block-heading">Agile Signature</h2>
-          <div className="d-flex align-items-center gap-3">
-            <div
-              className="bg-success rounded-circle text-white d-flex align-items-center justify-content-center"
-              style={{ width: "32px", height: "32px" }}
-            >
-              A
-            </div>
-          </div>
-        </header>
-      </div>
-
-      <div className="container py-4 mt-5">
+      <div className="container py-4 mt-2">
         <h1 className="text-center mb-5">Professional Email Signatures</h1>
 
         <div className="row g-4">
