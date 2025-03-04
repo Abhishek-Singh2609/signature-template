@@ -17,18 +17,30 @@
     .content {
       flex-direction: column;
     }
+    
+    .form-section {
+      width: 100%;
+      max-width: 100%;
+      min-width: auto;
+    }
   }
   
   .form-section {
-    background-color: #ffffff;
+    background-color: #f4f4f4;
     border: 1px solid rgb(230, 230, 230);
     box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 10px;
     border-radius: 8px;
     padding: 20px;
+    width: 400px;
+    min-width: 400px;
+    max-width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
   }
   
   .preview-section {
     flex: 1;
+    background-color: #f4f4f4;
   }
   
   /* Tabs styles */
@@ -350,7 +362,8 @@
 
 .image-tip {
   font-size: 12px;
-  color: #777;
+  color: #666;
+  margin-top: 5px;
 }
 
 .preview-section {
@@ -364,4 +377,52 @@
   }
 .tip-fix{
     margin-top: 1rem;
+}
+
+/* Campaign banners section */
+.campaign-banners-section {
+  width: 100%;
+  overflow: hidden;
+}
+
+.campaign-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.campaign-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+@media (min-width: 500px) {
+  .campaign-form-row {
+    flex-direction: row;
+  }
+}
+
+.campaign-form-group {
+  margin: 0;
+  flex: 1;
+}
+
+.campaign-upload-container {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.campaign-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
