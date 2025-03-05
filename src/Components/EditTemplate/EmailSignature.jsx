@@ -1,88 +1,145 @@
 "use client"
 
 import { useState, useRef } from "react"
+import { useNavigate, useLocation } from "react-router-dom"
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaTimes } from "react-icons/fa"
 import "./EmailSignature.css"
 
 const EmailSignatureCreator = () => {
-  const [activeTab, setActiveTab] = useState("Personal Info")
-  const [selectedDesign, setSelectedDesign] = useState("default")
+  const navigate = useNavigate()
+  const location = useLocation()
+  
+  // Check if we're coming back from preview page with preserved state
+  const { preserveDesign, selectedDesign: savedDesign, preserveFormData, formData: savedFormData, activeTab: savedActiveTab } = location.state || {}
+  
+  // Load data from localStorage if available
+  const loadFromLocalStorage = () => {
+    try {
+      const savedState = localStorage.getItem('emailSignatureState')
+      if (savedState) {
+        return JSON.parse(savedState)
+      }
+    } catch (error) {
+      console.error('Error loading from localStorage:', error)
+    }
+    return null
+  }
+  
+  // Get initial state from localStorage or use default values
+  const getInitialState = () => {
+    // First check if we're coming back from preview page
+    if (preserveFormData && savedFormData) {
+      return {
+        formData: savedFormData,
+        activeTab: savedActiveTab || "Personal Info",
+        selectedDesign: savedDesign || "default"
+      }
+    }
+    
+    // Then check localStorage
+    const localStorageState = loadFromLocalStorage()
+    if (localStorageState) {
+      return {
+        formData: localStorageState.formData,
+        activeTab: localStorageState.activeTab || "Personal Info",
+        selectedDesign: localStorageState.selectedDesign || "default"
+      }
+    }
+    
+    // Default values if nothing is saved
+    return {
+      formData: {
+        name: "John Doe",
+        jobTitle: "Product Designer",
+        company: "Agilesignature.com",
+        email: "john.doe@agile.com",
+        phone: "+1 (555) 123-4567",
+        location: "San Francisco, CA",
+        website: "www.agilesignature.com",
+        linkedin: "",
+        twitter: "",
+        instagram: "",
+        facebook: "",
+        youtube: "",
+        profileImage: null,
+        logo: null,
+        banner: null,
+        disclaimer: "",
+        campaigns: [
+          { id: 1, name: "Campaign 1", image: null, startDate: "", expiryDate: "", active: false, links: [
+            { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
+            { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
+            { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
+          ] },
+          { id: 2, name: "Campaign 2", image: null, startDate: "", expiryDate: "", active: false, links: [
+            { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
+            { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
+            { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
+          ] },
+          { id: 3, name: "Campaign 3", image: null, startDate: "", expiryDate: "", active: false, links: [
+            { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
+            { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
+            { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
+          ] },
+          { id: 4, name: "Campaign 4", image: null, startDate: "", expiryDate: "", active: false, links: [
+            { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
+            { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
+            { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
+          ] },
+        ]
+      },
+      activeTab: "Personal Info",
+      selectedDesign: "default"
+    }
+  }
+  
+  // Get initial state
+  const initialState = getInitialState()
+  
+  const [activeTab, setActiveTab] = useState(initialState.activeTab)
+  const [selectedDesign, setSelectedDesign] = useState(initialState.selectedDesign)
   const imageInputRef = useRef(null)
   const logoInputRef = useRef(null)
-  const [formData, setFormData] = useState({
-    name: "John Doe",
-    jobTitle: "Product Designer",
-    company: "Agilesignature.com",
-    email: "john.doe@agile.com",
-    phone: "+1 (555) 123-4567",
-    location: "San Francisco, CA",
-    website: "www.agilesignature.com",
-    linkedin: "",
-    twitter: "",
-    instagram: "",
-    facebook: "",
-    youtube: "",
-    profileImage: null,
-    logo: null,
-    banner: null,
-    disclaimer: "",
-    campaigns: [
-      { id: 1, name: "Campaign 1", image: null, startDate: "", expiryDate: "", active: false, links: [
-        { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
-        { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
-        { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
-      ] },
-      { id: 2, name: "Campaign 2", image: null, startDate: "", expiryDate: "", active: false, links: [
-        { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
-        { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
-        { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
-      ] },
-      { id: 3, name: "Campaign 3", image: null, startDate: "", expiryDate: "", active: false, links: [
-        { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
-        { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
-        { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
-      ] },
-      { id: 4, name: "Campaign 4", image: null, startDate: "", expiryDate: "", active: false, links: [
-        { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
-        { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
-        { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
-      ] },
-      { id: 5, name: "Campaign 5", image: null, startDate: "", expiryDate: "", active: false, links: [
-        { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
-        { url: "", text: "Link 2", area: { x: 33, y: 0, width: 34, height: 100 } },
-        { url: "", text: "Link 3", area: { x: 67, y: 0, width: 33, height: 100 } }
-      ] },
-    ],
-    activeCampaigns: [],
-  })
+  const [formData, setFormData] = useState(initialState.formData)
+
+  // Save state to localStorage
+  const saveToLocalStorage = (newFormData, newActiveTab, newSelectedDesign) => {
+    try {
+      const stateToSave = {
+        formData: newFormData || formData,
+        activeTab: newActiveTab || activeTab,
+        selectedDesign: newSelectedDesign || selectedDesign
+      }
+      localStorage.setItem('emailSignatureState', JSON.stringify(stateToSave))
+    } catch (error) {
+      console.error('Error saving to localStorage:', error)
+    }
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
+    const updatedFormData = { ...formData, [name]: value }
+    setFormData(updatedFormData)
+    saveToLocalStorage(updatedFormData)
   }
 
   const handleImageUpload = (e, type) => {
     const file = e.target.files[0]
     if (file) {
       const reader = new FileReader()
-      reader.onload = (e) => {
-        setFormData((prevState) => ({
-          ...prevState,
-          [type]: e.target.result,
-        }))
+      reader.onload = (event) => {
+        const updatedFormData = { ...formData, [type]: event.target.result }
+        setFormData(updatedFormData)
+        saveToLocalStorage(updatedFormData)
       }
       reader.readAsDataURL(file)
     }
   }
 
   const removeImage = (type) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [type]: null,
-    }))
+    const updatedFormData = { ...formData, [type]: null }
+    setFormData(updatedFormData)
+    saveToLocalStorage(updatedFormData)
   }
 
   const triggerImageUpload = () => {
@@ -108,103 +165,108 @@ const EmailSignatureCreator = () => {
   }
 
   const removeLogo = () => {
-    setFormData((prevState) => ({
-      ...prevState,
-      logo: null,
-    }))
+    const updatedFormData = { ...formData, logo: null }
+    setFormData(updatedFormData)
+    saveToLocalStorage(updatedFormData)
   }
 
   // Campaign banner functions
   const handleCampaignNameChange = (id, value) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      campaigns: prevState.campaigns.map((campaign) => 
+    const updatedFormData = {
+      ...formData,
+      campaigns: formData.campaigns.map((campaign) =>
         campaign.id === id ? { ...campaign, name: value } : campaign
-      )
-    }))
+      ),
+    }
+    setFormData(updatedFormData)
+    saveToLocalStorage(updatedFormData)
   }
 
   const handleCampaignImageUpload = (e, id) => {
     const file = e.target.files[0]
     if (file) {
       const reader = new FileReader()
-      reader.onload = (e) => {
-        setFormData((prevState) => ({
-          ...prevState,
-          campaigns: prevState.campaigns.map((campaign) => 
-            campaign.id === id ? { ...campaign, image: e.target.result } : campaign
-          )
-        }))
+      reader.onload = (event) => {
+        const updatedFormData = {
+          ...formData,
+          campaigns: formData.campaigns.map((campaign) =>
+            campaign.id === id ? { ...campaign, image: event.target.result } : campaign
+          ),
+        }
+        setFormData(updatedFormData)
+        saveToLocalStorage(updatedFormData)
       }
       reader.readAsDataURL(file)
     }
   }
 
   const handleCampaignExpiryChange = (id, value) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      campaigns: prevState.campaigns.map((campaign) => 
+    const updatedFormData = {
+      ...formData,
+      campaigns: formData.campaigns.map((campaign) =>
         campaign.id === id ? { ...campaign, expiryDate: value } : campaign
-      )
-    }))
+      ),
+    }
+    setFormData(updatedFormData)
+    saveToLocalStorage(updatedFormData)
   }
 
   const handleCampaignStartDateChange = (id, value) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      campaigns: prevState.campaigns.map((campaign) => 
+    const updatedFormData = {
+      ...formData,
+      campaigns: formData.campaigns.map((campaign) =>
         campaign.id === id ? { ...campaign, startDate: value } : campaign
-      )
-    }))
+      ),
+    }
+    setFormData(updatedFormData)
+    saveToLocalStorage(updatedFormData)
   }
 
   const handleCampaignLinkChange = (campaignId, linkIndex, field, value) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      campaigns: prevState.campaigns.map((campaign) => {
+    const updatedFormData = {
+      ...formData,
+      campaigns: formData.campaigns.map((campaign) => {
         if (campaign.id === campaignId) {
-          const updatedLinks = [...campaign.links];
+          const updatedLinks = [...campaign.links]
           updatedLinks[linkIndex] = {
             ...updatedLinks[linkIndex],
             [field]: value
-          };
-          return { ...campaign, links: updatedLinks };
+          }
+          return { ...campaign, links: updatedLinks }
         }
-        return campaign;
+        return campaign
       })
-    }))
+    }
+    setFormData(updatedFormData)
+    saveToLocalStorage(updatedFormData)
   }
 
   const removeCampaignImage = (id) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      campaigns: prevState.campaigns.map((campaign) => 
+    const updatedFormData = {
+      ...formData,
+      campaigns: formData.campaigns.map((campaign) =>
         campaign.id === id ? { ...campaign, image: null } : campaign
-      )
-    }))
+      ),
+    }
+    setFormData(updatedFormData)
+    saveToLocalStorage(updatedFormData)
   }
 
   const toggleCampaignActive = (id) => {
-    setFormData((prevState) => {
-      // Get the campaign to toggle
-      const campaign = prevState.campaigns.find(c => c.id === id);
-      
-      // Update campaigns array with toggled active state for the selected campaign
-      const updatedCampaigns = prevState.campaigns.map(campaign => 
-        campaign.id === id ? { ...campaign, active: !campaign.active } : campaign
-      );
-      
-      // Get list of active campaign IDs
-      const activeCampaignIds = updatedCampaigns
-        .filter(c => c.active)
-        .map(c => c.id);
-      
-      return {
-        ...prevState,
-        campaigns: updatedCampaigns,
-        activeCampaigns: activeCampaignIds
-      }
-    })
+    const campaign = formData.campaigns.find((c) => c.id === id)
+    
+    if (!campaign || !campaign.image || isCampaignExpired(campaign.expiryDate, campaign.startDate)) {
+      return
+    }
+    
+    const updatedFormData = {
+      ...formData,
+      campaigns: formData.campaigns.map((c) =>
+        c.id === id ? { ...c, active: !c.active } : c
+      ),
+    }
+    setFormData(updatedFormData)
+    saveToLocalStorage(updatedFormData)
   }
 
   // Check if campaign is expired or not yet started
@@ -360,6 +422,31 @@ const EmailSignatureCreator = () => {
     }, 100)
   }
 
+  // Function to navigate to preview page
+  const navigateToPreview = () => {
+    const signatureHTML = generateSignatureHTML()
+    navigate("/preview", { 
+      state: { 
+        signatureHTML,
+        formData,
+        selectedDesign,
+        activeTab
+      } 
+    })
+  }
+
+  // Update the tab click handler to save active tab to localStorage
+  const handleTabClick = (tab) => {
+    setActiveTab(tab)
+    saveToLocalStorage(null, tab)
+  }
+
+  // Update the design selection to save to localStorage
+  const handleDesignSelect = (designId) => {
+    setSelectedDesign(designId)
+    saveToLocalStorage(null, null, designId)
+  }
+
   // Render tab content based on active tab
   const renderTabContent = () => {
     switch (activeTab) {
@@ -474,7 +561,7 @@ const EmailSignatureCreator = () => {
                 <div
                   key={template.id}
                   className={`design-card ${selectedDesign === template.id ? "selected" : ""}`}
-                  onClick={() => setSelectedDesign(template.id)}
+                  onClick={() => handleDesignSelect(template.id)}
                   style={{ borderColor: selectedDesign === template.id ? template.color : "#ddd" }}
                 >
                   <div
@@ -581,7 +668,7 @@ const EmailSignatureCreator = () => {
                     <img src={formData.logo || "/placeholder.svg"} alt="Logo" className="image-preview" />
                     <button
                       className="remove-image-btn"
-                      onClick={() => removeImage("logo")}
+                      onClick={() => removeLogo()}
                       style={{
                         position: "absolute",
                         top: "0",
@@ -706,59 +793,59 @@ const EmailSignatureCreator = () => {
                           <img
                             src={campaign.image}
                             alt={`Campaign ${campaign.id}`}
-                            className="image-preview"
+                      className="image-preview"
                             style={{ width: "100%", height: "auto", maxHeight: "150px", objectFit: "cover" }}
-                          />
-                          <button
-                            className="remove-image-btn"
+                    />
+                    <button
+                      className="remove-image-btn"
                             onClick={() => removeCampaignImage(campaign.id)}
-                            style={{
-                              position: "absolute",
-                              top: "0",
-                              right: "0",
-                              background: "rgba(0,0,0,0.5)",
-                              color: "white",
-                              border: "none",
-                              borderRadius: "50%",
-                              width: "24px",
-                              height: "24px",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              cursor: "pointer",
-                            }}
-                          >
-                            <FaTimes size={12} />
-                          </button>
-                        </div>
-                      ) : (
-                        <div
-                          className="upload-placeholder"
+                      style={{
+                        position: "absolute",
+                        top: "0",
+                        right: "0",
+                        background: "rgba(0,0,0,0.5)",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "50%",
+                        width: "24px",
+                        height: "24px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <FaTimes size={12} />
+                    </button>
+                  </div>
+                ) : (
+                  <div
+                    className="upload-placeholder"
                           onClick={() => document.getElementById(`campaign-upload-${campaign.id}`).click()}
-                          style={{
-                            width: "100%",
+                    style={{
+                      width: "100%",
                             height: "150px",
-                            border: "2px dashed #ddd",
-                            borderRadius: "4px",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <span className="upload-icon">🖼️</span>
+                      border: "2px dashed #ddd",
+                      borderRadius: "4px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <span className="upload-icon">🖼️</span>
                           <span>Upload Campaign Banner</span>
-                        </div>
-                      )}
-                      <input
+                  </div>
+                )}
+                <input
                         id={`campaign-upload-${campaign.id}`}
-                        type="file"
+                  type="file"
                         onChange={(e) => handleCampaignImageUpload(e, campaign.id)}
-                        accept="image/*"
-                        style={{ display: "none" }}
-                      />
-                    </div>
+                  accept="image/*"
+                  style={{ display: "none" }}
+                />
+              </div>
                     
                     <div style={{ flex: "1 1 15%" }}>
                       <label style={{ display: "block", marginBottom: "8px", fontWeight: "500" }}>Banner Links (Clickable Areas)</label>
@@ -1564,7 +1651,7 @@ const EmailSignatureCreator = () => {
               </div>
             )}
           </div>
-        </div>
+      </div>
       )
     }
 
@@ -1694,9 +1781,9 @@ const EmailSignatureCreator = () => {
             {formData.banner && (
               <img
                 src={formData.banner}
-                alt="Banner"
+              alt="Banner"
                 style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
-              />
+            />
             )}
           </div>
         )}
@@ -1727,7 +1814,7 @@ const EmailSignatureCreator = () => {
               <button
                 key={tab}
                 className={`tab ${activeTab === tab ? "active" : ""}`}
-                onClick={() => setActiveTab(tab)}
+                onClick={() => handleTabClick(tab)}
               >
                 {tab}
               </button>
@@ -1744,7 +1831,7 @@ const EmailSignatureCreator = () => {
           {renderSignature()}
 
           <div className="d-flex justify-content-end my-4">
-                   <button className="btn btn-success">
+                   <button className="btn btn-success" onClick={navigateToPreview}>
                      <i className="bi bi-check2-circle me-2"></i>
                      OK, I'm done
                    </button>

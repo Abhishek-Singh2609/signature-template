@@ -13,19 +13,18 @@ import Navbar from './Common/Navbar/Navbar';
 import Trial from './Components/TrialPage/Trial';
 import BannerPage from './Components/BannerSelection/BannerPage';
 import EmailSignatureCreator from './Components/EditTemplate/EmailSignature';
-
+import SignaturePreview from './Components/PreviewPage/SignaturePreview';
+import SubscriptionPage from './Components/Subscription/SubscriptionPage';
+import Payment from './Components/Payment/Payment';
 function App() {
   const location = useLocation();
-  const hideLayout = location.pathname === "/login" || location.pathname === "/blockspage"; // Hide navbar & footer
+  const hideLayout = location.pathname === "/login" || location.pathname === "/blockspage"; // Hide navbar & footer for preview page too
   
   return (
     <>
-      {/* < Navbar/>
-      <Home />    
-      <Demo />  
-      <Footer /> */}
+     
       
-       { <Navbar />} 
+       {<Navbar />} 
       
       <Routes>
         <Route path="/" element={<Home/>} />
@@ -35,8 +34,9 @@ function App() {
         <Route path="/trial" element={ <Trial />  } />
         <Route path="/banner" element={ <BannerPage />  } />
         <Route path="/edittemplate" element={ <EmailSignatureCreator />  } />
-
-
+        <Route path="/preview" element={ <SignaturePreview />  } />
+        <Route path="/subscription" element={ <SubscriptionPage />  } />  
+        <Route path="/payment" element={ <Payment />  } />  
        
       </Routes>
       
