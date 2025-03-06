@@ -145,7 +145,7 @@ body {
 }
 
 .region-title {
-    color: #FF4D15;
+    color: #110727;
     font-weight: 500;
     margin-bottom: 0.5rem;
 }
@@ -202,7 +202,7 @@ textarea.form-control {
 }
 
 .btn-submit {
-    background: #FF4D15;
+    background: #110727;
     color: white;
     padding: 0.75rem 2rem;
     border: none;
@@ -234,8 +234,9 @@ textarea.form-control {
 .accordion {
     max-width: 800px;
     margin: 0 auto;
-    background-color: #FFF5F2;
-            padding: 2rem;
+    background-color: #efefef;
+    padding: 2rem;
+   border-radius: 1rem;
 }
 
 .accordion-item {

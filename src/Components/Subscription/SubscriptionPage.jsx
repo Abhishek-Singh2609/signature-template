@@ -31,13 +31,9 @@ function SubscriptionPage() {
 
             <div className="price-container">
               <span className="price">$0.99</span>
-              <span className="price-period">seat / month</span>
+              <span className="price-period">user/ month</span>
             </div>
 
-            <div className="total-price">
-              Total ${billingCycle === "annually" ? "76.00" : "22.80"} / month
-              <div className="billing-period">Billed {billingCycle}</div>
-            </div>
 
             <p className="plan-description">Create professional and consistent signatures for your organization.</p>
 
@@ -95,13 +91,12 @@ function SubscriptionPage() {
             <h2 className="plan-name">Plus</h2>
 
             <div className="price-container">
-              <span className="price">$12</span>
-              <span className="price-period">seat /year</span>
+              <span className="price plus-plan-price">$12</span>
+              <span className="price-period">user /year</span>
             </div>
 
             <div className="total-price">
-              Total ${billingCycle === "annually" ? "92.00" : "27.60"} / month
-              <div className="billing-period">Billed {billingCycle}</div>
+              <p><strong>25% OFF</strong> $9 user/year</p>
             </div>
 
             <p className="plan-description">Get advanced features & analytics for your signatures.</p>

@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
-import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaTimes } from "react-icons/fa"
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube,FaTwitter, FaTimes } from "react-icons/fa"
 import "./EmailSignature.css"
 
 const EmailSignatureCreator = () => {
@@ -49,22 +49,24 @@ const EmailSignatureCreator = () => {
     // Default values if nothing is saved
     return {
       formData: {
-        name: "John Doe",
-        jobTitle: "Product Designer",
-        company: "Agilesignature.com",
-        email: "john.doe@agile.com",
-        phone: "+1 (555) 123-4567",
-        location: "San Francisco, CA",
-        website: "www.agilesignature.com",
-        linkedin: "",
-        twitter: "",
-        instagram: "",
-        facebook: "",
-        youtube: "",
-        profileImage: null,
-        logo: null,
-        banner: null,
-        disclaimer: "",
+    name: "John Doe",
+    jobTitle: "Product Designer",
+    company: "Agilesignature.com",
+    email: "john.doe@agile.com",
+    phone: "+1 (555) 123-4567",
+    phone2: "",
+    location: "San Francisco, CA",
+    website: "www.agilesignature.com",
+    linkedin: "",
+    twitter: "",
+    instagram: "",
+    facebook: "",
+    youtube: "",
+    portfolio: "",
+    profileImage: null,
+    logo: null,
+    banner: null,
+    disclaimer: "",
         campaigns: [
           { id: 1, name: "Campaign 1", image: null, startDate: "", expiryDate: "", active: false, links: [
             { url: "", text: "Link 1", area: { x: 0, y: 0, width: 33, height: 100 } },
@@ -453,47 +455,52 @@ const EmailSignatureCreator = () => {
       case "Personal Info":
         return (
           <div className="form">
-            <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} />
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="labeltext-width" htmlFor="name">Name</label>
+              <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} style={{ width: "50%" }} />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="jobTitle">Job Title</label>
-              <input type="text" id="jobTitle" name="jobTitle" value={formData.jobTitle} onChange={handleInputChange} />
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="labeltext-width" htmlFor="jobTitle">Job Title</label>
+              <input type="text" id="jobTitle" name="jobTitle" value={formData.jobTitle} onChange={handleInputChange} style={{ width: "50%" }} />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="company">Company</label>
-              <input type="text" id="company" name="company" value={formData.company} onChange={handleInputChange} />
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="labeltext-width" htmlFor="company">Company</label>
+              <input type="text" id="company" name="company" value={formData.company} onChange={handleInputChange} style={{ width: "50%" }} />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} />
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="labeltext-width" htmlFor="email">Email</label>
+              <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} style={{ width: "50%" }} />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="phone">Phone</label>
-              <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} />
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="labeltext-width" htmlFor="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} style={{ width: "50%" }} />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="location">Location</label>
-              <input type="text" id="location" name="location" value={formData.location} onChange={handleInputChange} />
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="labeltext-width" htmlFor="phone2"> Phone</label>
+              <input type="tel" id="phone2" name="phone2" value={formData.phone2} onChange={handleInputChange} style={{ width: "50%" }} />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="website">Website</label>
-              <input type="text" id="website" name="website" value={formData.website} onChange={handleInputChange} />
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="labeltext-width" htmlFor="location">Location</label>
+              <input type="text" id="location" name="location" value={formData.location} onChange={handleInputChange} style={{ width: "50%" }} />
+            </div>
+
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="labeltext-width" htmlFor="website">Website</label>
+              <input type="text" id="website" name="website" value={formData.website} onChange={handleInputChange} style={{ width: "50%" }} />
             </div>
           </div>
         )
       case "Social":
         return (
           <div className="form">
-            <div className="form-group">
-              <label htmlFor="linkedin">LinkedIn URL</label>
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="label-width" htmlFor="linkedin"><FaLinkedin size={25} style={{color:"#0077b5"}}/></label>
               <input
                 type="url"
                 id="linkedin"
@@ -501,11 +508,12 @@ const EmailSignatureCreator = () => {
                 value={formData.linkedin}
                 onChange={handleInputChange}
                 placeholder="https://linkedin.com/in/johndoe"
+                style={{ width: "50%" }}
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="twitter">Twitter URL</label>
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="label-width" htmlFor="twitter"><span style={{fontSize:"25px",color:"#000"}}>𝕏</span></label>
               <input
                 type="url"
                 id="twitter"
@@ -513,11 +521,12 @@ const EmailSignatureCreator = () => {
                 value={formData.twitter}
                 onChange={handleInputChange}
                 placeholder="https://twitter.com/johndoe"
+                style={{ width: "50%" }}
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="instagram">Instagram URL</label>
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="label-width" htmlFor="instagram"><FaInstagram size={25} style={{color:"#c32aa3"}}/></label>
               <input
                 type="url"
                 id="instagram"
@@ -525,11 +534,12 @@ const EmailSignatureCreator = () => {
                 value={formData.instagram}
                 onChange={handleInputChange}
                 placeholder="https://instagram.com/johndoe"
+                style={{ width: "50%" }}
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="facebook">Facebook URL</label>
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="label-width" htmlFor="facebook"><FaFacebook size={25} style={{color:"#3b5998"}}/></label>
               <input
                 type="url"
                 id="facebook"
@@ -537,10 +547,12 @@ const EmailSignatureCreator = () => {
                 value={formData.facebook}
                 onChange={handleInputChange}
                 placeholder="https://facebook.com/johndoe"
+                style={{ width: "50%" }}
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="youtube">YouTube URL</label>
+            
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="label-width" htmlFor="youtube"><FaYoutube size={25} style={{color:"#ff0000"}}/></label>
               <input
                 type="url"
                 id="youtube"
@@ -548,6 +560,20 @@ const EmailSignatureCreator = () => {
                 value={formData.youtube}
                 onChange={handleInputChange}
                 placeholder="https://youtube.com/johndoe"
+                style={{ width: "50%" }}
+              />
+            </div>
+            
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <label className="label-width" htmlFor="portfolio"><span style={{fontSize:"25px",color:"#000"}}>🔗</span></label>
+              <input
+                type="url"
+                id="portfolio"
+                name="portfolio"
+                value={formData.portfolio}
+                onChange={handleInputChange}
+                placeholder="https://portfolio.com/johndoe"
+                style={{ width: "50%" }}
               />
             </div>
           </div>
@@ -721,7 +747,7 @@ const EmailSignatureCreator = () => {
             </div>
           </div>
         )
-      case "Banner & Disclaimer":
+      case "Banner":
         return (
           <div className="form">
             <div className="campaign-banners-section" style={{ marginTop: "10px" }}>
@@ -786,7 +812,7 @@ const EmailSignatureCreator = () => {
                     </div>
                   </div>
                   
-                  <div style={{ display: "flex", marginTop: "10px" }}>
+                  <div style={{ display: "", marginTop: "10px" }}>
                     <div className="image-upload-container" style={{ flex: "1", marginRight: "15px" }}>
                       {campaign.image ? (
                         <div className="image-preview-container" style={{ position: "relative" }}>
@@ -848,7 +874,7 @@ const EmailSignatureCreator = () => {
               </div>
                     
                     <div style={{ flex: "1 1 15%" }}>
-                      <label style={{ display: "block", marginBottom: "8px", fontWeight: "500" }}>Banner Links (Clickable Areas)</label>
+                      <label style={{ display: "block", marginBottom: "8px", marginTop: "15px", fontWeight: "500" }}>Banner Links (Clickable Areas)</label>
                       
                       {campaign.links.map((link, index) => (
                         <div key={index} style={{ 
@@ -903,7 +929,7 @@ const EmailSignatureCreator = () => {
                               fontSize: "13px"
                             }}
                           />
-                          <div style={{ 
+                          {/* <div style={{ 
                             marginTop: "4px", 
                             fontSize: "11px", 
                             color: "#666",
@@ -911,7 +937,7 @@ const EmailSignatureCreator = () => {
                             alignItems: "center"
                           }}>
                             {index === 0 ? "Left section" : index === 1 ? "Middle section" : "Right section"}
-                          </div>
+                          </div> */}
                         </div>
                       ))}
                     </div>
@@ -950,7 +976,11 @@ const EmailSignatureCreator = () => {
                 </div>
               ))}
             </div>
-
+          </div>
+        )
+      case "Disclaimer":
+        return (
+          <div className="form">
             <div className="form-group" style={{ marginTop: "20px" }}>
               <label htmlFor="disclaimer">Disclaimer</label>
               <textarea
@@ -1054,10 +1084,10 @@ const EmailSignatureCreator = () => {
 
   const designStyle = getDesignStyle()
 
-  // Render social icons if URLs are provided
+  // Render social icons
   const renderSocialIcons = () => {
     const hasAnySocial =
-      formData.linkedin || formData.twitter || formData.instagram || formData.facebook || formData.youtube
+      formData.linkedin || formData.twitter || formData.instagram || formData.facebook || formData.youtube || formData.portfolio
     if (!hasAnySocial) return null
 
     return (
@@ -1083,6 +1113,11 @@ const EmailSignatureCreator = () => {
             <FaYoutube />
           </span>
         )}
+        {formData.portfolio && (
+          <span className="social-icon portfolio" style={{ fontSize: "16px" }}>
+            🔗
+          </span>
+        )}
       </div>
     )
   }
@@ -1094,310 +1129,21 @@ const EmailSignatureCreator = () => {
     // Split layout design
     if (design.layout === "split") {
       return (
-        <div style={designStyle.containerStyle} className="signature-preview split-layout">
-          <div style={designStyle.sidebarStyle} className="signature-sidebar">
-            {formData.profileImage && (
-              <div className="profile-image-container centered">
-                <img src={formData.profileImage || "/placeholder.svg"} alt={formData.name} className="profile-image" />
-              </div>
-            )}
-            <h3 className="preview-name centered" style={{ color: "white" }}>
-              {formData.name}
-            </h3>
-            <p className="preview-job centered" style={{ color: "rgba(255,255,255,0.8)" }}>
-              {formData.jobTitle}
-            </p>
-            <div className="sidebar-social-icons">{renderSocialIcons()}</div>
-            {formData.logo && (
-              <div className="logo-container" style={{ marginTop: "10px" }}>
-                <img
-                  src={formData.logo || "/placeholder.svg"}
-                  alt="Company Logo"
-                  style={{
-                    maxWidth: "100px",
-                    maxHeight: "50px",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-            )}
-          </div>
-          <div style={designStyle.contentStyle} className="signature-content">
-            <p className="preview-company">{formData.company}</p>
-            <div className="contact-info">
-              <p className="contact-item">
-                <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                  📞
-                </span>{" "}
-                {formData.phone}
-              </p>
-              <p className="contact-item">
-                <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                  ✉️
-                </span>{" "}
-                {formData.email}
-              </p>
-              {formData.website && (
-                <p className="contact-item">
-                  <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                    🌐
-                  </span>{" "}
-                  {formData.website}
-                </p>
-              )}
-              {formData.location && (
-                <p className="contact-item">
-                  <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                    📍
-                  </span>{" "}
-                  {formData.location}
-                </p>
-              )}
-            </div>
-            
-            {(getActiveCampaigns().length > 0 || formData.banner) && (
-              <div className="banner-container" style={{ marginTop: "10px", width: "100%" }}>
-                {getActiveCampaigns().map((campaign) => (
-                  <div key={campaign.id} style={{ position: "relative", marginBottom: "5px" }}>
-                    <img
-                      src={campaign.image}
-                      alt={campaign.name}
-                      style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
-                    />
-                    {/* Clickable areas */}
-                    <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
-                      {campaign.links.map((link, index) => (
-                        link.url && (
-                          <a 
-                            key={index}
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title={link.text}
-                            style={{
-                              position: "absolute",
-                              left: `${link.area.x}%`,
-                              top: `${link.area.y}%`,
-                              width: `${link.area.width}%`,
-                              height: `${link.area.height}%`,
-                              display: "block",
-                              zIndex: 2,
-                              cursor: "pointer"
-                            }}
-                          />
-                        )
-                      ))}
-                    </div>
-                  </div>
-                ))}
-                {formData.banner && (
-                  <img
-                    src={formData.banner}
-                    alt="Banner"
-                    style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
-                  />
-                )}
-              </div>
-            )}
-            
-            {formData.disclaimer && (
-              <div
-                className="disclaimer"
-                style={{
-                  marginTop: "10px",
-                  fontSize: "10px",
-                  color: "#666",
-                  borderTop: "1px solid #eee",
-                  paddingTop: "10px",
-                }}
-              >
-                {formData.disclaimer}
-              </div>
-            )}
-          </div>
-        </div>
-      )
-    }
-
-    // Centered layout design
-    if (design.layout === "centered") {
-      return (
-        <div
-          className="signature-preview centered-layout"
-          style={{
-            backgroundColor: designStyle.backgroundColor,
-            color: designStyle.textColor,
-            border: designStyle.borderStyle,
-            boxShadow: designStyle.boxShadow,
-            textAlign: "center",
-            padding: "24px",
-          }}
-        >
-          {formData.profileImage && (
-            <div className="profile-image-container centered">
-              <img src={formData.profileImage || "/placeholder.svg"} alt={formData.name} className="profile-image" />
-            </div>
-          )}
-          {formData.logo && (
-            <div className="logo-container" style={{ marginTop: "10px" }}>
-              <img
-                src={formData.logo || "/placeholder.svg"}
-                alt="Company Logo"
-                style={{
-                  maxWidth: "100px",
-                  maxHeight: "50px",
-                  objectFit: "contain",
-                }}
-              />
-            </div>
-          )}
-          <h3 className="preview-name" style={{ color: designStyle.nameColor }}>
-            {formData.name}
-          </h3>
-          <p className="preview-job">
-            {formData.jobTitle} at {formData.company}
-          </p>
-          <div className="preview-divider" style={designStyle.dividerStyle}></div>
-          <div className="centered-contact">
-            <p className="contact-item centered-item">
-              <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                📞
-              </span>{" "}
-              {formData.phone}
-            </p>
-            <p className="contact-item centered-item">
-              <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                ✉️
-              </span>{" "}
-              {formData.email}
-            </p>
-            {formData.website && (
-              <p className="contact-item centered-item">
-                <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                  🌐
-                </span>{" "}
-                {formData.website}
-              </p>
-            )}
-            {formData.location && (
-              <p className="contact-item centered-item">
-                <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                  📍
-                </span>{" "}
-                {formData.location}
-              </p>
-            )}
-          </div>
-          <div className="centered-social">{renderSocialIcons()}</div>
-          
-          {(getActiveCampaigns().length > 0 || formData.banner) && (
-            <div className="banner-container" style={{ marginTop: "10px", width: "100%" }}>
-              {getActiveCampaigns().map((campaign) => (
-                <div key={campaign.id} style={{ position: "relative", marginBottom: "5px" }}>
-                  <img
-                    src={campaign.image}
-                    alt={campaign.name}
-                    style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
-                  />
-                  {/* Clickable areas */}
-                  <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
-                    {campaign.links.map((link, index) => (
-                      link.url && (
-                        <a 
-                          key={index}
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          title={link.text}
-                          style={{
-                            position: "absolute",
-                            left: `${link.area.x}%`,
-                            top: `${link.area.y}%`,
-                            width: `${link.area.width}%`,
-                            height: `${link.area.height}%`,
-                            display: "block",
-                            zIndex: 2,
-                            cursor: "pointer"
-                          }}
-                        />
-                      )
-                    ))}
-                  </div>
-                </div>
-              ))}
-              {formData.banner && (
-                <img
-                  src={formData.banner}
-                  alt="Banner"
-                  style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
-                />
-              )}
-            </div>
-          )}
-          
-          {formData.disclaimer && (
-            <div
-              className="disclaimer"
-              style={{
-                marginTop: "10px",
-                fontSize: "10px",
-                color: "#666",
-                borderTop: "1px solid #eee",
-                paddingTop: "10px",
-                textAlign: "center"
-              }}
-            >
-              {formData.disclaimer}
-            </div>
-          )}
-        </div>
-      )
-    }
-
-    // Horizontal layout with footer
-    if (design.layout === "horizontal") {
-      return (
-        <div
-          className="signature-preview horizontal-layout"
-          style={{
-            backgroundColor: designStyle.backgroundColor,
-            color: designStyle.textColor,
-            border: designStyle.borderStyle,
-            boxShadow: designStyle.boxShadow,
-            padding: "0",
-            overflow: "hidden",
-          }}
-        >
-          <div className="horizontal-content" style={{ padding: "24px" }}>
-            <div className="horizontal-header">
-              {formData.profileImage ? (
-                <div className="horizontal-with-image">
-                  <div className="profile-image-container">
-                    <img
-                      src={formData.profileImage || "/placeholder.svg"}
-                      alt={formData.name}
-                      className="profile-image"
-                    />
-                  </div>
-                  <div className="horizontal-title">
-                    <h3 className="preview-name" style={{ color: designStyle.nameColor }}>
-                      {formData.name}
-                    </h3>
-                    <p className="preview-job">
-                      {formData.jobTitle} at {formData.company}
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <div>
-                  <h3 className="preview-name" style={{ color: designStyle.nameColor }}>
-                    {formData.name}
-                  </h3>
-                  <p className="preview-job">
-                    {formData.jobTitle} at {formData.company}
-                  </p>
+        <>
+          <div style={designStyle.containerStyle} className="signature-preview split-layout">
+            <div style={designStyle.sidebarStyle} className="signature-sidebar">
+              {formData.profileImage && (
+                <div className="profile-image-container centered">
+                  <img src={formData.profileImage || "/placeholder.svg"} alt={formData.name} className="profile-image" />
                 </div>
               )}
+              <h3 className="preview-name centered" style={{ color: "white" }}>
+                {formData.name}
+              </h3>
+              <p className="preview-job centered" style={{ color: "rgba(255,255,255,0.8)" }}>
+                {formData.jobTitle}
+              </p>
+              <div className="sidebar-social-icons">{renderSocialIcons()}</div>
               {formData.logo && (
                 <div className="logo-container" style={{ marginTop: "10px" }}>
                   <img
@@ -1412,24 +1158,172 @@ const EmailSignatureCreator = () => {
                 </div>
               )}
             </div>
-            <div className="preview-divider" style={{ backgroundColor: "#e6e6e6" }}></div>
-            <div className="preview-contact">
-              <div className="contact-left">
+            <div style={designStyle.contentStyle} className="signature-content">
+              <p className="preview-company">{formData.company}</p>
+              <div className="contact-info">
                 <p className="contact-item">
                   <span className="contact-icon" style={{ color: designStyle.accentColor }}>
                     📞
                   </span>{" "}
                   {formData.phone}
                 </p>
+                {formData.phone2 && (
+                  <p className="contact-item">
+                    <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                      📞
+                    </span>{" "}
+                    {formData.phone2}
+                  </p>
+                )}
                 <p className="contact-item">
                   <span className="contact-icon" style={{ color: designStyle.accentColor }}>
                     ✉️
                   </span>{" "}
                   {formData.email}
                 </p>
+                {formData.website && (
+                  <p className="contact-item">
+                    <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                      🌐
+                    </span>{" "}
+                    {formData.website}
+                  </p>
+                )}
+                {formData.location && (
+                  <p className="contact-item">
+                    <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                      📍
+                    </span>{" "}
+                    {formData.location}
+                  </p>
+                )}
               </div>
-              <div className="contact-right">{renderSocialIcons()}</div>
+              
+              {(getActiveCampaigns().length > 0 || formData.banner) && (
+                <div className="banner-container" style={{ marginTop: "10px", width: "100%" }}>
+                  {getActiveCampaigns().map((campaign) => (
+                    <div key={campaign.id} style={{ position: "relative", marginBottom: "5px" }}>
+                      <img
+                        src={campaign.image}
+                        alt={campaign.name}
+                        style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                      />
+                      {/* Clickable areas */}
+                      <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+                        {campaign.links.map((link, index) => (
+                          link.url && (
+                            <a 
+                              key={index}
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title={link.text}
+                              style={{
+                                position: "absolute",
+                                left: `${link.area.x}%`,
+                                top: `${link.area.y}%`,
+                                width: `${link.area.width}%`,
+                                height: `${link.area.height}%`,
+                                display: "block",
+                                zIndex: 2,
+                                cursor: "pointer"
+                              }}
+                            />
+                          )
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                  {formData.banner && (
+                    <img
+                      src={formData.banner}
+                      alt="Banner"
+                      style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                    />
+                  )}
+                </div>
+              )}
             </div>
+          </div>
+          
+          {/* Disclaimer outside of signature-preview */}
+          {formData.disclaimer && (
+            <div
+              className="disclaimer"
+              style={{
+                marginTop: "20px",
+                fontSize: "12px",
+                color: "#666",
+                borderTop: "1px solid #eee",
+                paddingTop: "10px",
+                backgroundColor: "#f9f9f9",
+                padding: "10px",
+                borderRadius: "4px",
+              }}
+            >
+              <strong>Disclaimer:</strong> {formData.disclaimer}
+            </div>
+          )}
+        </>
+      )
+    }
+
+    // Centered layout
+    if (design.layout === "centered") {
+      return (
+        <>
+          <div className="signature-preview centered-layout" style={designStyle.containerStyle}>
+            {formData.profileImage && (
+              <div className="profile-image-container centered">
+                <img src={formData.profileImage || "/placeholder.svg"} alt={formData.name} className="profile-image" />
+              </div>
+            )}
+            <h3 className="preview-name centered" style={{ color: designStyle.nameColor }}>
+              {formData.name}
+            </h3>
+            <p className="preview-job centered">
+              {formData.jobTitle} at {formData.company}
+            </p>
+            <div className="preview-divider" style={designStyle.dividerStyle}></div>
+            <div className="centered-contact">
+              <p className="contact-item centered-item">
+                <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                  📞
+                </span>{" "}
+                {formData.phone}
+              </p>
+              {formData.phone2 && (
+                <p className="contact-item centered-item">
+                  <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                    📞
+                  </span>{" "}
+                  {formData.phone2}
+                </p>
+              )}
+              <p className="contact-item centered-item">
+                <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                  ✉️
+                </span>{" "}
+                {formData.email}
+              </p>
+              {formData.website && (
+                <p className="contact-item centered-item">
+                  <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                    🌐
+                  </span>{" "}
+                  {formData.website}
+                </p>
+              )}
+              {formData.location && (
+                <p className="contact-item centered-item">
+                  <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                    📍
+                  </span>{" "}
+                  {formData.location}
+                </p>
+              )}
+            </div>
+            <div className="centered-social">{renderSocialIcons()}</div>
             
             {(getActiveCampaigns().length > 0 || formData.banner) && (
               <div className="banner-container" style={{ marginTop: "10px", width: "100%" }}>
@@ -1475,26 +1369,198 @@ const EmailSignatureCreator = () => {
                 )}
               </div>
             )}
-            
-            {formData.disclaimer && (
-              <div
-                className="disclaimer"
-                style={{
-                  marginTop: "10px",
-                  fontSize: "10px",
-                  color: "#666",
-                  borderTop: "1px solid #eee",
-                  paddingTop: "10px",
-                }}
-              >
-                {formData.disclaimer}
+          </div>
+          
+          {/* Disclaimer outside of signature-preview */}
+          {formData.disclaimer && (
+            <div
+              className="disclaimer"
+              style={{
+                marginTop: "20px",
+                fontSize: "12px",
+                color: "#666",
+                borderTop: "1px solid #eee",
+                paddingTop: "10px",
+                backgroundColor: "#f9f9f9",
+                padding: "10px",
+                borderRadius: "4px",
+              }}
+            >
+               {formData.disclaimer}
+            </div>
+          )}
+        </>
+      )
+    }
+
+    // Horizontal layout
+    if (design.layout === "horizontal") {
+      return (
+        <>
+          <div
+            className="signature-preview horizontal-layout"
+            style={{
+              backgroundColor: designStyle.backgroundColor,
+              color: designStyle.textColor,
+              border: designStyle.borderStyle,
+              boxShadow: designStyle.boxShadow,
+              background: designStyle.gradient || designStyle.backgroundColor,
+              overflow: "hidden",
+            }}
+          >
+            <div className="horizontal-content" style={{ padding: "24px" }}>
+              <div className="horizontal-header">
+                {formData.profileImage ? (
+                  <div className="horizontal-with-image">
+                    <div className="profile-image-container">
+                      <img
+                        src={formData.profileImage || "/placeholder.svg"}
+                        alt={formData.name}
+                        className="profile-image"
+                      />
+                    </div>
+                    <div className="horizontal-title">
+                      <h3 className="preview-name" style={{ color: designStyle.nameColor }}>
+                        {formData.name}
+                      </h3>
+                      <p className="preview-job">
+                        {formData.jobTitle} at {formData.company}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <h3 className="preview-name" style={{ color: designStyle.nameColor }}>
+                      {formData.name}
+                    </h3>
+                    <p className="preview-job">
+                      {formData.jobTitle} at {formData.company}
+                    </p>
+                  </div>
+                )}
+                {formData.logo && (
+                  <div className="logo-container" style={{ marginTop: "10px" }}>
+                    <img
+                      src={formData.logo || "/placeholder.svg"}
+                      alt="Company Logo"
+                      style={{
+                        maxWidth: "100px",
+                        maxHeight: "50px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </div>
+                )}
               </div>
-            )}
+              <div className="preview-divider" style={{ backgroundColor: "#e6e6e6" }}></div>
+              <div className="preview-contact">
+                <div className="contact-left">
+                  <p className="contact-item">
+                    <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                      📞
+                    </span>{" "}
+                    {formData.phone}
+                  </p>
+                  {formData.phone2 && (
+                    <p className="contact-item">
+                      <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                        📞
+                      </span>{" "}
+                      {formData.phone2}
+                    </p>
+                  )}
+                  <p className="contact-item">
+                    <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                      ✉️
+                    </span>{" "}
+                    {formData.email}
+                  </p>
+                  {formData.website && (
+                    <p className="contact-item">
+                      <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                        🌐
+                      </span>{" "}
+                      {formData.website}
+                    </p>
+                  )}
+                  {formData.location && (
+                    <p className="contact-item">
+                      <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                        📍
+                      </span>{" "}
+                      {formData.location}
+                    </p>
+                  )}
+                </div>
+                <div className="contact-right">{renderSocialIcons()}</div>
+              </div>
+              
+              {(getActiveCampaigns().length > 0 || formData.banner) && (
+                <div className="banner-container" style={{ marginTop: "10px", width: "100%" }}>
+                  {getActiveCampaigns().map((campaign) => (
+                    <div key={campaign.id} style={{ position: "relative", marginBottom: "5px" }}>
+                      <img
+                        src={campaign.image}
+                        alt={campaign.name}
+                        style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                      />
+                      {/* Clickable areas */}
+                      <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+                        {campaign.links.map((link, index) => (
+                          link.url && (
+                            <a 
+                              key={index}
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title={link.text}
+                              style={{
+                                position: "absolute",
+                                left: `${link.area.x}%`,
+                                top: `${link.area.y}%`,
+                                width: `${link.area.width}%`,
+                                height: `${link.area.height}%`,
+                                display: "block",
+                                zIndex: 2,
+                                cursor: "pointer"
+                              }}
+                            />
+                          )
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                  {formData.banner && (
+                    <img
+                      src={formData.banner}
+                      alt="Banner"
+                      style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-          <div style={designStyle.footerStyle} className="horizontal-footer">
-            <div className="footer-social">{renderSocialIcons()}</div>
-          </div>
-        </div>
+          
+          {/* Disclaimer outside of signature-preview */}
+          {formData.disclaimer && (
+            <div
+              className="disclaimer"
+              style={{
+                marginTop: "20px",
+                fontSize: "12px",
+                color: "#666",
+                borderTop: "1px solid #eee",
+                paddingTop: "10px",
+                backgroundColor: "#f9f9f9",
+                padding: "10px",
+                borderRadius: "4px",
+              }}
+            >
+              <strong>Disclaimer:</strong> {formData.disclaimer}
+            </div>
+          )}
+        </>
       )
     }
 
@@ -1567,26 +1633,10 @@ const EmailSignatureCreator = () => {
                 </p>
                 <p className="contact-item">
                   <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                    ✉️
+                    📞
                   </span>{" "}
-                  {formData.email}
+                  {formData.phone2}
                 </p>
-                {formData.website && (
-                  <p className="contact-item">
-                    <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                      🌐
-                    </span>{" "}
-                    {formData.website}
-                  </p>
-                )}
-                {formData.location && (
-                  <p className="contact-item">
-                    <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                      📍
-                    </span>{" "}
-                    {formData.location}
-                  </p>
-                )}
               </div>
               <div className="contact-right">{renderSocialIcons()}</div>
             </div>
@@ -1635,44 +1685,31 @@ const EmailSignatureCreator = () => {
                 )}
               </div>
             )}
-            
-            {formData.disclaimer && (
-              <div
-                className="disclaimer"
-                style={{
-                  marginTop: "10px",
-                  fontSize: "10px",
-                  color: "#666",
-                  borderTop: "1px solid #eee",
-                  paddingTop: "10px",
-                }}
-              >
-                {formData.disclaimer}
-              </div>
-            )}
           </div>
-      </div>
+        </div>
       )
     }
 
     // Default/Standard layout
     return (
-      <div
-        className="signature-preview standard-layout"
-        style={{
-          backgroundColor: designStyle.backgroundColor,
-          color: designStyle.textColor,
-          border: designStyle.borderStyle,
-          boxShadow: designStyle.boxShadow,
-          background: designStyle.gradient || designStyle.backgroundColor,
-        }}
-      >
-        <div className="standard-header">
-          {formData.profileImage ? (
-            <div className="standard-with-image">
-              <div className="profile-image-container">
-                <img src={formData.profileImage || "/placeholder.svg"} alt={formData.name} className="profile-image" />
+      <>
+        <div className="signature-preview standard-layout">
+          <div className="standard-header">
+            {formData.profileImage ? (
+              <div className="standard-with-image">
+                <div className="profile-image-container">
+                  <img src={formData.profileImage || "/placeholder.svg"} alt={formData.name} className="profile-image" />
+                </div>
+                <div>
+                  <h3 className="preview-name" style={{ color: designStyle.nameColor }}>
+                    {formData.name}
+                  </h3>
+                  <p className="preview-job">
+                    {formData.jobTitle} at {formData.company}
+                  </p>
+                </div>
               </div>
+            ) : (
               <div>
                 <h3 className="preview-name" style={{ color: designStyle.nameColor }}>
                   {formData.name}
@@ -1681,127 +1718,131 @@ const EmailSignatureCreator = () => {
                   {formData.jobTitle} at {formData.company}
                 </p>
               </div>
-            </div>
-          ) : (
-            <div>
-              <h3 className="preview-name" style={{ color: designStyle.nameColor }}>
-                {formData.name}
-              </h3>
-              <p className="preview-job">
-                {formData.jobTitle} at {formData.company}
-              </p>
-            </div>
-          )}
-          {formData.logo && (
-            <div className="logo-container" style={{ marginTop: "10px" }}>
-              <img
-                src={formData.logo || "/placeholder.svg"}
-                alt="Company Logo"
-                style={{
-                  maxWidth: "100px",
-                  maxHeight: "50px",
-                  objectFit: "contain",
-                }}
-              />
-            </div>
-          )}
-        </div>
-        <div
-          className="preview-divider"
-          style={{ backgroundColor: selectedDesign === "minimal" ? designStyle.accentColor : "#e6e6e6" }}
-        ></div>
-        <div className="preview-contact">
-          <div className="contact-left">
-            <p className="contact-item">
-              <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                📞
-              </span>{" "}
-              {formData.phone}
-            </p>
-            <p className="contact-item">
-              <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                ✉️
-              </span>{" "}
-              {formData.email}
-            </p>
-            {formData.website && (
-              <p className="contact-item">
-                <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                  🌐
-                </span>{" "}
-                {formData.website}
-              </p>
             )}
-            {formData.location && (
-              <p className="contact-item">
-                <span className="contact-icon" style={{ color: designStyle.accentColor }}>
-                  📍
-                </span>{" "}
-                {formData.location}
-              </p>
+            {formData.logo && (
+              <div className="logo-container" style={{ marginTop: "10px" }}>
+                <img
+                  src={formData.logo || "/placeholder.svg"}
+                  alt="Company Logo"
+                  style={{
+                    maxWidth: "100px",
+                    maxHeight: "50px",
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
             )}
           </div>
-          <div className="contact-right">{renderSocialIcons()}</div>
-        </div>
-        {(getActiveCampaigns().length > 0 || formData.banner) && (
-          <div className="banner-container" style={{ marginTop: "10px", width: "100%" }}>
-            {getActiveCampaigns().map((campaign) => (
-              <div key={campaign.id} style={{ position: "relative", marginBottom: "5px" }}>
+          <div
+            className="preview-divider"
+            style={{ backgroundColor: selectedDesign === "minimal" ? designStyle.accentColor : "#e6e6e6" }}
+          ></div>
+          <div className="preview-contact">
+            <div className="contact-left">
+              <p className="contact-item">
+                <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                  📞
+                </span>{" "}
+                {formData.phone}
+              </p>
+              {formData.phone2 && (
+                <p className="contact-item">
+                  <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                    📞
+                  </span>{" "}
+                  {formData.phone2}
+                </p>
+              )}
+              <p className="contact-item">
+                <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                  ✉️
+                </span>{" "}
+                {formData.email}
+              </p>
+              {formData.website && (
+                <p className="contact-item">
+                  <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                    🌐
+                  </span>{" "}
+                  {formData.website}
+                </p>
+              )}
+              {formData.location && (
+                <p className="contact-item">
+                  <span className="contact-icon" style={{ color: designStyle.accentColor }}>
+                    📍
+                  </span>{" "}
+                  {formData.location}
+                </p>
+              )}
+            </div>
+            <div className="contact-right">{renderSocialIcons()}</div>
+          </div>
+          {(getActiveCampaigns().length > 0 || formData.banner) && (
+            <div className="banner-container" style={{ marginTop: "10px", width: "100%" }}>
+              {getActiveCampaigns().map((campaign) => (
+                <div key={campaign.id} style={{ position: "relative", marginBottom: "5px" }}>
+                  <img
+                    src={campaign.image}
+                    alt={campaign.name}
+                    style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
+                  />
+                  {/* Clickable areas */}
+                  <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+                    {campaign.links.map((link, index) => (
+                      link.url && (
+                        <a 
+                          key={index}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title={link.text}
+                          style={{
+                            position: "absolute",
+                            left: `${link.area.x}%`,
+                            top: `${link.area.y}%`,
+                            width: `${link.area.width}%`,
+                            height: `${link.area.height}%`,
+                            display: "block",
+                            zIndex: 2,
+                            cursor: "pointer"
+                          }}
+                        />
+                      )
+                    ))}
+                  </div>
+                </div>
+              ))}
+              {formData.banner && (
                 <img
-                  src={campaign.image}
-                  alt={campaign.name}
+                  src={formData.banner}
+                  alt="Banner"
                   style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
                 />
-                {/* Clickable areas */}
-                <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
-                  {campaign.links.map((link, index) => (
-                    link.url && (
-                      <a 
-                        key={index}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title={link.text}
-                        style={{
-                          position: "absolute",
-                          left: `${link.area.x}%`,
-                          top: `${link.area.y}%`,
-                          width: `${link.area.width}%`,
-                          height: `${link.area.height}%`,
-                          display: "block",
-                          zIndex: 2,
-                          cursor: "pointer"
-                        }}
-                      />
-                    )
-                  ))}
-                </div>
-              </div>
-            ))}
-            {formData.banner && (
-              <img
-                src={formData.banner}
-              alt="Banner"
-                style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "cover" }}
-            />
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
+        </div>
+        
+        {/* Disclaimer outside of signature-preview */}
         {formData.disclaimer && (
           <div
             className="disclaimer"
             style={{
-              marginTop: "10px",
-              fontSize: "10px",
+              marginTop: "20px",
+              fontSize: "12px",
               color: "#666",
               borderTop: "1px solid #eee",
               paddingTop: "10px",
+              backgroundColor: "#f9f9f9",
+              padding: "10px",
+              borderRadius: "4px",
             }}
           >
-            {formData.disclaimer}
+            <strong>Disclaimer:</strong> {formData.disclaimer}
           </div>
         )}
-      </div>
+      </>
     )
   }
 
@@ -1810,7 +1851,7 @@ const EmailSignatureCreator = () => {
       <div className="content">
         <div className="form-section">
           <div className="tabs">
-            {["Personal Info", "Images", "Social", "Design", "Banner & Disclaimer"].map((tab) => (
+            {["Personal Info", "Images", "Social", "Design", "Banner", "Disclaimer"].map((tab) => (
               <button
                 key={tab}
                 className={`tab ${activeTab === tab ? "active" : ""}`}

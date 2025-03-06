@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
 import "./SignaturePreview.css";
+import email from "./email-body.png";
 
 const SignaturePreview = () => {
   const location = useLocation();
@@ -65,66 +66,97 @@ const SignaturePreview = () => {
   };
 
   return (
-    <div className="preview-page">
+    <div className="full-preview-page">
       <div className="preview-header">
         <button className="back-button" onClick={handleBack}>
           <i className="bi bi-arrow-left"></i> Back to Editor
         </button>
-        <h1>Your Email Signature</h1>
+        <h1>Email Signature Preview</h1>
         <p className="preview-description">
-          Here's how your signature will appear in emails. You can copy it to
-          clipboard or download it as HTML.
+          This is how your signature will appear in emails
         </p>
       </div>
 
-      <div className="preview-container">
-        <div className="device-mockup">
-          <div className="device-screen">
-            <div className="email-compose-mockup">
-              <div className="email-body-mockup">
-                <div
-                  className="signature-preview-content"
-                  dangerouslySetInnerHTML={{ __html: cleanHTML }}
-                />
+      <div className="full-email-preview">
+        <div className="email-client-mockup">
+          <div className="email-client-header">
+           
+            <div className="email-client-title">New Message</div>
+          </div>
+          
+          <div className="email-client-toolbar">
+            <button className="email-toolbar-btn">Send</button>
+            <button className="email-toolbar-btn">Attach</button>
+            <button className="email-toolbar-btn">Format</button>
+          </div>
+          
+          <div className="email-client-content">
+            <div className="email-form-fields">
+              <div className="email-field">
+                <label>From:</label>
+                <span>{formData?.email || 'your.email@example.com'}</span>
+              </div>
+              <div className="email-field">
+                <label>To:</label>
+                <span>recipient@example.com</span>
+              </div>
+              <div className="email-field">
+                <label>Subject:</label>
+                <span>Important Information</span>
+              </div>
+            </div>
+            <div>
+                <img style={{width: "100%", height: "100%"}} src={email} alt="email_body" />
+              </div>
+            
+            <div className="email-body">
+              <div className="email-message">
+                <p>Hello,</p>
+                <p>Thank you for your message. I wanted to follow up on our previous conversation.</p>
+                <p>Please let me know if you have any questions or need additional information.</p>
+                <p>Best regards,</p>
+              </div>
+              
+              
+              <div className="email-signature-container">
+                <div className="signature-preview-content" dangerouslySetInnerHTML={{ __html: cleanHTML }} />
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="preview-actions">
-          <div className="action-card">
-            <div className="action-icon">📋</div>
-            <h3>Copy to Clipboard</h3>
-            <p>Copy your signature to paste directly into your email client.</p>
-            <button className="action-button primary" onClick={copyToClipboard}>
-              Copy Signature
-            </button>
-            <span id="copy-message" className="copy-message">
-              Copied to clipboard!
-            </span>
-          </div>
-
-          <div className="action-card">
-            <div className="action-icon">⬇️</div>
-            <h3>Download HTML</h3>
-            <p>Download the HTML file to import into your email client.</p>
-            <button
-              className="action-button secondary"
-              onClick={downloadHTML}
-              disabled={!signatureHTML}
-            >
-              Download HTML
-            </button>
-          </div>
-
-          <div className="action-card">
-            <div className="action-icon">✏️</div>
-            <h3>Edit Signature</h3>
-            <p>Go back to make changes to your signature.</p>
-            <button className="action-button tertiary" onClick={handleBack}>
-              Back to Editor
-            </button>
-          </div>
+      <div className="preview-actions">
+        <div className="action-card">
+          <div className="action-icon">📋</div>
+          <h3>Copy to Clipboard</h3>
+          <p>Copy your signature to paste directly into your email client</p>
+          <button className="action-button primary" onClick={copyToClipboard}>
+            Copy Signature
+          </button>
+          <span id="copy-message" className="copy-message">Copied to clipboard!</span>
+        </div>
+        
+        <div className="action-card">
+          <div className="action-icon">⬇️</div>
+          <h3>Download HTML</h3>
+          <p>Download the HTML file to import into your email client</p>
+          <button 
+            className="action-button secondary" 
+            onClick={downloadHTML} 
+            disabled={!signatureHTML}
+          >
+            Download HTML
+          </button>
+        </div>
+        
+        <div className="action-card">
+          <div className="action-icon">✏️</div>
+          <h3>Edit Signature</h3>
+          <p>Go back to make changes to your signature</p>
+          <button className="action-button tertiary" onClick={handleBack}>
+            Back to Editor
+          </button>
         </div>
       </div>
     </div>
