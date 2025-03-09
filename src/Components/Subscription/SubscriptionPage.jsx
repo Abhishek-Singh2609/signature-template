@@ -27,7 +27,7 @@ function SubscriptionPage() {
         {/* Basic Plan */}
         <div className="col-lg-4 col-md-6 mb-4">
           <div className="pricing-card">
-            <h2 className="plan-name">Basic</h2>
+            <h2 className="plan-name">Monthly</h2>
 
             <div className="price-container">
               <span className="price">$0.99</span>
@@ -37,7 +37,7 @@ function SubscriptionPage() {
 
             <p className="plan-description">Create professional and consistent signatures for your organization.</p>
 
-            <button className="cta-button">Try for free</button>
+            <button className="cta-button">Start free trial</button>
 
             <div className="features-list">
               <div className="feature-item">
@@ -88,20 +88,22 @@ function SubscriptionPage() {
         <div className="col-lg-4 col-md-6 mb-4">
           <div className="pricing-card best-value">
             <div className="best-value-badge">Most Popular</div>
-            <h2 className="plan-name">Plus</h2>
+            <h2 className="plan-name">Yearly</h2>
 
             <div className="price-container">
               <span className="price plus-plan-price">$12</span>
-              <span className="price-period">user /year</span>
+              <span className="price-period"><strong>25% OFF</strong></span>
+              <span className="price">$9</span>
+              <span className="price-period">user/ month</span>
             </div>
 
             <div className="total-price">
-              <p><strong>25% OFF</strong> $9 user/year</p>
+              <p></p>
             </div>
 
             <p className="plan-description">Get advanced features & analytics for your signatures.</p>
 
-            <button className="cta-button">Try for free</button>
+            <button className="cta-button">Start free trial</button>
 
             <div className="features-list">
               <div className="included-features">All the benefits of Basic and:</div>

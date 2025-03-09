@@ -167,9 +167,8 @@
 
 .email-body {
   background: white;
-  border: 1px solid #eee;
-  border-radius: 4px;
-  padding: 20px;
+padding-right: 10px;
+  text-align: left;
 }
 
 .email-message {
@@ -183,12 +182,15 @@
 }
 
 .email-signature-container {
-  border-top: 1px solid #eee;
+  
   padding-top: 20px;
+  text-align: left;
 }
 
 .signature-preview-content {
-  max-width: 100%;
+  max-width: fit-content;
+
+  text-align: left;
 }
 
 .signature-preview-content * {
@@ -199,6 +201,13 @@
   max-width: 100%;
   height: auto;
   display: inline-block;
+}
+
+.disclaimer-preview h4 {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 600;
 }
 
 /* Action Cards */

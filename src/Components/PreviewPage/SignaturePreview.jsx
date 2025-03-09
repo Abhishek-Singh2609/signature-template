@@ -80,21 +80,20 @@ const SignaturePreview = () => {
       <div className="full-email-preview">
         <div className="email-client-mockup">
           <div className="email-client-header">
-           
             <div className="email-client-title">New Message</div>
           </div>
-          
+
           <div className="email-client-toolbar">
             <button className="email-toolbar-btn">Send</button>
             <button className="email-toolbar-btn">Attach</button>
             <button className="email-toolbar-btn">Format</button>
           </div>
-          
+
           <div className="email-client-content">
             <div className="email-form-fields">
               <div className="email-field">
                 <label>From:</label>
-                <span>{formData?.email || 'your.email@example.com'}</span>
+                <span>{formData?.email || "your.email@example.com"}</span>
               </div>
               <div className="email-field">
                 <label>To:</label>
@@ -106,21 +105,130 @@ const SignaturePreview = () => {
               </div>
             </div>
             <div>
-                <img style={{width: "100%", height: "100%"}} src={email} alt="email_body" />
-              </div>
-            
+              <img
+                style={{ width: "100%", height: "100%" }}
+                src={email}
+                alt="email_body"
+              />
+            </div>
+
             <div className="email-body">
               <div className="email-message">
                 <p>Hello,</p>
-                <p>Thank you for your message. I wanted to follow up on our previous conversation.</p>
-                <p>Please let me know if you have any questions or need additional information.</p>
+                <p>
+                  Thank you for your message. I wanted to follow up on our
+                  previous conversation.
+                </p>
+                <p>
+                  Please let me know if you have any questions or need
+                  additional information.
+                </p>
                 <p>Best regards,</p>
               </div>
-              
-              
+
               <div className="email-signature-container">
-                <div className="signature-preview-content" dangerouslySetInnerHTML={{ __html: cleanHTML }} />
+                <div
+                  className="signature-preview-content"
+                  dangerouslySetInnerHTML={{ __html: cleanHTML }}
+                />
               </div>
+
+              {/* Display banners outside of signature-preview-content card without text labels */}
+              {formData?.campaigns && (
+                <div className="banners-outside-preview">
+                  <div>
+                    {formData.campaigns
+                      .filter((campaign) => campaign.active && campaign.image)
+                      .map((campaign) => (
+                        <div
+                          key={campaign.id}
+                          style={{ position: "relative", marginBottom: "10px",marginTop:"8px" }}
+                        >
+                          <img
+                            src={campaign.image}
+                            alt={campaign.name}
+                            style={{
+                              width: "75%",
+                              height: "auto",
+                              maxHeight: "100px",
+                              borderRadius: "4px",
+                            }}
+                          />
+                          {/* Clickable areas */}
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: 0,
+                              left: 0,
+                              width: "100%",
+                              height: "100%",
+                            }}
+                          >
+                            {campaign.links.map(
+                              (link, index) =>
+                                link.url && (
+                                  <a
+                                    key={index}
+                                    href={link.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    title={link.text}
+                                    style={{
+                                      position: "absolute",
+                                      left: `${link.area.x}%`,
+                                      top: `${link.area.y}%`,
+                                      width: `${link.area.width}%`,
+                                      height: `${link.area.height}%`,
+                                      display: "block",
+                                      zIndex: 2,
+                                      cursor: "pointer",
+                                    }}
+                                  />
+                                )
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    {formData.banner && (
+                      <div>
+                        <img
+                          src={formData.banner}
+                          alt="Banner"
+                          style={{
+                            width: "100%",
+                            height: "auto",
+                            maxHeight: "100px",
+                            objectFit: "cover",
+                            borderRadius: "4px",
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {formData?.disclaimer && (
+                <div
+                  className="disclaimer-preview"
+                  style={{
+                    marginTop: "20px",
+                    fontSize: "12px",
+                    color: "#666",
+
+                    paddingTop: "15px",
+
+                    padding: "15px",
+                    borderRadius: "4px",
+                    maxWidth: "100%",
+                    textAlign: "left",
+                  }}
+                >
+                  <div
+                    dangerouslySetInnerHTML={{ __html: formData.disclaimer }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -134,22 +242,24 @@ const SignaturePreview = () => {
           <button className="action-button primary" onClick={copyToClipboard}>
             Copy Signature
           </button>
-          <span id="copy-message" className="copy-message">Copied to clipboard!</span>
+          <span id="copy-message" className="copy-message">
+            Copied to clipboard!
+          </span>
         </div>
-        
+
         <div className="action-card">
           <div className="action-icon">⬇️</div>
           <h3>Download HTML</h3>
           <p>Download the HTML file to import into your email client</p>
-          <button 
-            className="action-button secondary" 
-            onClick={downloadHTML} 
+          <button
+            className="action-button secondary"
+            onClick={downloadHTML}
             disabled={!signatureHTML}
           >
             Download HTML
           </button>
         </div>
-        
+
         <div className="action-card">
           <div className="action-icon">✏️</div>
           <h3>Edit Signature</h3>

@@ -44,6 +44,18 @@
     align-items: center;
     justify-content: center;
 }
+.icon-styles-first{
+    width: 48px;
+}
+.icon-styles-second{
+    width: 43px;
+}
+.icon-styles-third{
+    width: 38px;
+}
+.icon-styles-fourth{
+    width:42px;
+}
 
 .hero-image {
     max-width: 100%;

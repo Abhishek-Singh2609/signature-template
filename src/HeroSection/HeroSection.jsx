@@ -27,7 +27,7 @@ function HeroSection() {
                     
                     <div class="features mb-5">
                         <div class="feature-item">
-                            <div class="feature-icon">→</div>
+                            <div class="feature-icon icon-styles-first">→</div>
                             <div>
                                 <h3 class="h5 mb-2">Consistent Branding: Ensure uniform email signatures across all teams and devices</h3>
                                 <p class="text-muted mb-0">Enterprise-Grade Security: Keep communications secure with industry-leading standards</p>
@@ -35,7 +35,7 @@ function HeroSection() {
                         </div>
                         
                         <div class="feature-item">
-                            <div class="feature-icon">→</div>
+                            <div class="feature-icon icon-styles-second">→</div>
                             <div>
                                 <h3 class="h5 mb-2">Compliance Made Easy: Stay aligned with global regulations effortlessly.</h3>
                                 <p class="text-muted mb-0">Centralized Management: Update and deploy signatures organization-wide in minutes</p>
@@ -43,14 +43,14 @@ function HeroSection() {
                         </div>
                         
                         <div class="feature-item">
-                            <div class="feature-icon">→</div>
+                            <div class="feature-icon icon-styles-third">→</div>
                             <div>
                                 <h3 class="h5 mb-2">Scalable & Flexible: Designed to grow with your business needs</h3>
                                 <p class="text-muted mb-0">Device & Platform Compatibility: Works seamlessly across all email clients and devices</p>
                             </div>
                         </div>
                         <div class="feature-item">
-                            <div class="feature-icon">→</div>
+                            <div class="feature-icon icon-styles-fourth">→</div>
                             <div>
                                 <h3 class="h5 mb-2">Choose from professionally designed templates for quick and easy setup</h3>
                                 <p class="text-muted mb-0">Easy to Use: Intuitive interface for effortless creation and management.</p>
