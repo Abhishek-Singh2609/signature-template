@@ -366,7 +366,7 @@ const EmailSignatureCreator = () => {
     {
       id: "dark",
       name: "Dark Professional",
-      color: "#2c3e50",
+      color: "#704242",
       layout: "standard",
     },
     {
@@ -533,7 +533,7 @@ const EmailSignatureCreator = () => {
     const baseStyle = {
       nameColor: design.color,
       accentColor: design.color,
-      backgroundColor: selectedDesign === "dark" ? "#2c3e50" : "white",
+      backgroundColor: selectedDesign === "dark" ? "#2c3e50" : "#f0f0f0",
       textColor: selectedDesign === "dark" ? "white" : "#333",
       borderStyle: selectedDesign === "minimal" ? "none" : "1px solid #e6e6e6",
       boxShadow: selectedDesign === "minimal" ? "none" : "0 2px 10px rgba(0, 0, 0, 0.05)",
