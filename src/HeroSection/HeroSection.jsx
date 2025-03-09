@@ -22,14 +22,14 @@ function HeroSection() {
         <section class="hero py-4">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="col-lg-7 mb-5 mb-lg-0">
                     <h1 class="hero-title mb-4">Powerful Centrally Managed Email Signature Designer</h1>
                     
                     <div class="features mb-5">
                         <div class="feature-item">
                             <div class="feature-icon icon-styles-first">→</div>
                             <div>
-                                <h3 class="h5 mb-2">Consistent Branding: Ensure uniform email signatures across all teams and devices</h3>
+                                <h3 class="h5 mb-2">Consistent Branding: Ensure uniform email signatures across <br /> all teams and devices</h3>
                                 <p class="text-muted mb-0">Enterprise-Grade Security: Keep communications secure with industry-leading standards</p>
                             </div>
                         </div>
@@ -60,7 +60,7 @@ function HeroSection() {
 
                     <button class="btn btn-dark btn-lg px-4"> Try it for Free for Next 30 days →</button>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-5">
                     <img src={Heroimg} alt="Email Signature Designer Interface" class="hero-image" />
                 </div>
             </div>
