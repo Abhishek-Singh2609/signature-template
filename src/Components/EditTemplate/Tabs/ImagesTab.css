@@ -73,4 +73,40 @@
   font-size: 12px;
   color: #666;
   margin-top: 5px;
+}
+
+/* Styles for the signature preview */
+/* Fixed size profile image styling */
+.profile-image {
+  width: 100px !important;
+  height: 100px !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+  max-width: 100px !important;
+  max-height: 100px !important;
+}
+
+.profile-image-container {
+  width: 100px !important;
+  height: 100px !important;
+  min-width: 100px !important;
+  min-height: 100px !important;
+  overflow: hidden !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.standard-with-image {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Logo container styles */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 } 

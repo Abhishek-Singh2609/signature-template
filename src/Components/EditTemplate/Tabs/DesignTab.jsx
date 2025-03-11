@@ -1,7 +1,163 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './DesignTab.css';
 
-const DesignTab = ({ designTemplates, selectedDesign, handleDesignSelect }) => {
+// Design templates - expanded with more aesthetic options
+const designTemplates = [
+  {
+    id: "default",
+    name: "Default Blue",
+    color: "#3498db",
+    layout: "standard",
+  },
+  {
+    id: "dark",
+    name: "Dark Professional",
+    color: "#704242",
+    layout: "standard",
+  },
+  {
+    id: "minimal",
+    name: "Minimal Gray",
+    color: "#7f8c8d",
+    layout: "standard",
+  },
+  {
+    id: "vibrant",
+    name: "Vibrant Purple",
+    color: "#9b59b6",
+    layout: "standard",
+  },
+  {
+    id: "green",
+    name: "Natural Green",
+    color: "#27ae60",
+    layout: "standard",
+  },
+  {
+    id: "modern",
+    name: "Modern Split",
+    color: "#e74c3c",
+    layout: "split",
+  },
+  {
+    id: "elegant",
+    name: "Elegant Gold",
+    color: "#f39c12",
+    layout: "centered",
+  },
+  {
+    id: "clean",
+    name: "Clean Teal",
+    color: "#16a085",
+    layout: "horizontal",
+  },
+  {
+    id: "gradient",
+    name: "Gradient Blue",
+    color: "brown",
+    gradient: "linear-gradient(135deg, #3498db, #2980b9)",
+    layout: "standard",
+  },
+  {
+    id: "bordered",
+    name: "Bordered Card",
+    color: "#8e44ad",
+    layout: "bordered",
+  },
+  {
+    id: "banner",
+    name: "Banner Design",
+    color: "#34495e",
+    layout: "banner",
+  },
+];
+
+// Get style based on selected design
+const getDesignStyle = (selectedDesign) => {
+  const design = designTemplates.find((d) => d.id === selectedDesign);
+
+  const baseStyle = {
+    nameColor: design.color,
+    accentColor: design.color,
+    backgroundColor: selectedDesign === "dark" ? "#2c3e50" : "#f0f0f0",
+    textColor: selectedDesign === "dark" ? "white" : "#333",
+    borderStyle: selectedDesign === "minimal" ? "none" : "1px solid #e6e6e6",
+    boxShadow: selectedDesign === "minimal" ? "none" : "0 2px 10px rgba(0, 0, 0, 0.05)",
+    gradient: design.gradient || null,
+    layout: design.layout,
+  };
+
+  // Add specific styling based on layout
+  if (design.layout === "split") {
+    return {
+      ...baseStyle,
+      containerStyle: {
+        display: "flex",
+        background: baseStyle.backgroundColor,
+      },
+      sidebarStyle: {
+        width: "120px",
+        backgroundColor: design.color,
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        color: "white",
+      },
+      contentStyle: {
+        flex: 1,
+        padding: "20px",
+      },
+    };
+  }
+
+  if (design.layout === "bordered") {
+    return {
+      ...baseStyle,
+      borderStyle: `3px solid ${design.color}`,
+      innerPadding: "16px",
+    };
+  }
+
+  if (design.layout === "horizontal") {
+    return {
+      ...baseStyle,
+      footerStyle: {
+        backgroundColor: design.color,
+        marginTop: "16px",
+        padding: "12px",
+        color: "white",
+        borderRadius: "0 0 8px 8px",
+      },
+    };
+  }
+
+  if (design.layout === "centered") {
+    return {
+      ...baseStyle,
+      textAlign: "center",
+      dividerStyle: {
+        width: "60%",
+        margin: "12px auto",
+        height: "2px",
+        background: design.color,
+      },
+    };
+  }
+
+  return baseStyle;
+};
+
+const DesignTab = ({ selectedDesign, saveToLocalStorage }) => {
+  // Local state to track the selected design
+  const [localSelectedDesign, setLocalSelectedDesign] = useState(selectedDesign);
+
+  // Update the design selection to save to localStorage
+  const handleDesignSelect = (designId) => {
+    setLocalSelectedDesign(designId);
+    saveToLocalStorage(null, null, designId);
+  };
+
   return (
     <div className="design-tab-container">
       <p className="design-tab-intro">Select a design template for your email signature:</p>
@@ -9,9 +165,9 @@ const DesignTab = ({ designTemplates, selectedDesign, handleDesignSelect }) => {
         {designTemplates.map((template) => (
           <div
             key={template.id}
-            className={`design-tab-card ${selectedDesign === template.id ? "selected" : ""}`}
+            className={`design-tab-card ${localSelectedDesign === template.id ? "selected" : ""}`}
             onClick={() => handleDesignSelect(template.id)}
-            style={{ borderColor: selectedDesign === template.id ? template.color : "#ddd" }}
+            style={{ borderColor: localSelectedDesign === template.id ? template.color : "#ddd" }}
           >
             <div
               className="design-tab-preview"
@@ -85,4 +241,5 @@ const DesignTab = ({ designTemplates, selectedDesign, handleDesignSelect }) => {
   );
 };
 
+export { designTemplates, getDesignStyle };
 export default DesignTab; 

@@ -1,7 +1,14 @@
 import React from 'react';
 import './PersonalInfoTab.css';
 
-const PersonalInfoTab = ({ formData, handleInputChange }) => {
+const PersonalInfoTab = ({ formData, saveToLocalStorage }) => {
+  // Handle input changes for personal info fields
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const updatedFormData = { ...formData, [name]: value };
+    saveToLocalStorage(updatedFormData);
+  };
+
   return (
     <div className="personal-info-form">
       <div className="personal-info-form-group">

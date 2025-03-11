@@ -1,18 +1,130 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { FaTimes } from "react-icons/fa";
 import './BannerTab.css';
 
 const BannerTab = ({ 
   formData, 
-  handleCampaignNameChange, 
-  handleCampaignStartDateChange, 
-  handleCampaignExpiryChange, 
-  handleCampaignImageUpload, 
-  removeCampaignImage, 
-  handleCampaignLinkChange, 
-  toggleCampaignActive, 
-  isCampaignExpired 
+  saveToLocalStorage
 }) => {
+  // Campaign banner functions
+  const handleCampaignNameChange = (id, value) => {
+    const updatedFormData = {
+      ...formData,
+      campaigns: formData.campaigns.map((campaign) =>
+        campaign.id === id ? { ...campaign, name: value } : campaign
+      ),
+    }
+    saveToLocalStorage(updatedFormData)
+  }
+
+  const handleCampaignImageUpload = (e, id) => {
+    const file = e.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (event) => {
+        const updatedFormData = {
+          ...formData,
+          campaigns: formData.campaigns.map((campaign) =>
+            campaign.id === id ? { ...campaign, image: event.target.result } : campaign
+          ),
+        }
+        saveToLocalStorage(updatedFormData)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleCampaignExpiryChange = (id, value) => {
+    const updatedFormData = {
+      ...formData,
+      campaigns: formData.campaigns.map((campaign) =>
+        campaign.id === id ? { ...campaign, expiryDate: value } : campaign
+      ),
+    }
+    saveToLocalStorage(updatedFormData)
+  }
+
+  const handleCampaignStartDateChange = (id, value) => {
+    const updatedFormData = {
+      ...formData,
+      campaigns: formData.campaigns.map((campaign) =>
+        campaign.id === id ? { ...campaign, startDate: value } : campaign
+      ),
+    }
+    saveToLocalStorage(updatedFormData)
+  }
+
+  const handleCampaignLinkChange = (campaignId, linkIndex, field, value) => {
+    const updatedFormData = {
+      ...formData,
+      campaigns: formData.campaigns.map((campaign) => {
+        if (campaign.id === campaignId) {
+          const updatedLinks = [...campaign.links]
+          updatedLinks[linkIndex] = {
+            ...updatedLinks[linkIndex],
+            [field]: value
+          }
+          return { ...campaign, links: updatedLinks }
+        }
+        return campaign
+      })
+    }
+    saveToLocalStorage(updatedFormData)
+  }
+
+  const removeCampaignImage = (id) => {
+    const updatedFormData = {
+      ...formData,
+      campaigns: formData.campaigns.map((campaign) =>
+        campaign.id === id ? { ...campaign, image: null } : campaign
+      ),
+    }
+    saveToLocalStorage(updatedFormData)
+  }
+
+  const toggleCampaignActive = (id) => {
+    const campaign = formData.campaigns.find((c) => c.id === id)
+    
+    if (!campaign || !campaign.image || isCampaignExpired(campaign.expiryDate, campaign.startDate)) {
+      return
+    }
+    
+    const updatedFormData = {
+      ...formData,
+      campaigns: formData.campaigns.map((c) =>
+        c.id === id ? { ...c, active: !c.active } : c
+      ),
+    }
+    saveToLocalStorage(updatedFormData)
+  }
+
+  // Check if campaign is expired or not yet started
+  const isCampaignExpired = (expiryDate, startDate) => {
+    const today = new Date();
+    
+    // Check if campaign has not started yet
+    if (startDate) {
+      const start = new Date(startDate);
+      if (today < start) return true; // Not yet started
+    }
+    
+    // Check if campaign has expired
+    if (expiryDate) {
+      const expiry = new Date(expiryDate);
+      if (today > expiry) return true; // Expired
+    }
+    
+    return false; // Campaign is active
+  }
+
+  // Get active campaigns
+  const getActiveCampaigns = () => {
+    const activeCampaigns = formData.campaigns.filter(campaign => 
+      campaign.active && campaign.image && !isCampaignExpired(campaign.expiryDate, campaign.startDate)
+    )
+    return activeCampaigns
+  }
+
   return (
     <div className="banner-tab-form">
       <div className="banner-tab-section">

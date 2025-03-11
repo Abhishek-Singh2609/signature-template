@@ -6,7 +6,7 @@ function HeroSection() {
   return (
     <div>
         
-        <div className=" py-5">
+        <div className=" py-5 hero-container">
   <div className="container">
     <div className="text-center">
       <h2 className="mb-4 custom-heading">

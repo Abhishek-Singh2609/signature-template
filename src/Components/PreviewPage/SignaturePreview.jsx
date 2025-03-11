@@ -217,8 +217,6 @@ const SignaturePreview = () => {
                     color: "#666",
 
                     paddingTop: "15px",
-
-                    padding: "15px",
                     borderRadius: "4px",
                     maxWidth: "100%",
                     textAlign: "left",

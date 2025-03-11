@@ -2,7 +2,52 @@ import React from 'react';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaTwitter } from "react-icons/fa";
 import './SocialTab.css';
 
-const SocialTab = ({ formData, handleInputChange }) => {
+// Render social icons if URLs are provided - exported as a standalone function
+const renderSocialIcons = (formData) => {
+  const hasAnySocial =
+    formData.linkedin || formData.twitter || formData.instagram || formData.facebook || formData.youtube || formData.portfolio;
+  if (!hasAnySocial) return null;
+
+  return (
+    <div className="social-icons">
+      {formData.linkedin && (
+        <span className="social-icon linkedin">
+          <FaLinkedin />
+        </span>
+      )}
+      {formData.twitter && <span className="social-icon twitter">𝕏</span>}
+      {formData.instagram && (
+        <span className="social-icon instagram">
+          <FaInstagram />
+        </span>
+      )}
+      {formData.facebook && (
+        <span className="social-icon facebook">
+          <FaFacebook />
+        </span>
+      )}
+      {formData.youtube && (
+        <span className="social-icon youtube">
+          <FaYoutube />
+        </span>
+      )}
+      {formData.portfolio && (
+        <span className="social-icon portfolio">
+          🔗
+        </span>
+      )}
+    </div>
+  );
+};
+
+const SocialTab = ({ formData, saveToLocalStorage }) => {
+  // Handle input changes for social fields
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const updatedFormData = { ...formData, [name]: value };
+    saveToLocalStorage(updatedFormData);
+  };
+
   return (
     <div className="social-tab-form">
       <div className="social-form-group">
@@ -98,4 +143,5 @@ const SocialTab = ({ formData, handleInputChange }) => {
   );
 };
 
+export { renderSocialIcons };
 export default SocialTab; 

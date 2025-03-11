@@ -2,12 +2,11 @@ import { useState, useRef, useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaTwitter, FaTimes } from "react-icons/fa"
 import "./EmailSignature.css"
-import RichTextEditor from "./RichTextEditor"
 
 // Import tab components
 import PersonalInfoTab from "./Tabs/PersonalInfoTab"
-import SocialTab from "./Tabs/SocialTab"
-import DesignTab from "./Tabs/DesignTab"
+import SocialTab, { renderSocialIcons } from "./Tabs/SocialTab"
+import DesignTab, { designTemplates, getDesignStyle } from "./Tabs/DesignTab"
 import ImagesTab from "./Tabs/ImagesTab"
 import BannerTab from "./Tabs/BannerTab"
 import DisclaimerTab from "./Tabs/DisclaimerTab"
@@ -93,7 +92,7 @@ const EmailSignatureCreator = () => {
     company: "Agilesignature.com",
     email: "john.doe@agile.com",
     phone: "+1 (555) 123-4567",
-        mobilePhone: "+2 (595) 123-5876",
+    mobilePhone: "+2 (595) 123-5876",
     location: "San Francisco, CA",
     website: "www.agilesignature.com",
     linkedin: "",
@@ -139,8 +138,6 @@ const EmailSignatureCreator = () => {
   
   const [activeTab, setActiveTab] = useState(initialState.activeTab)
   const [selectedDesign, setSelectedDesign] = useState(initialState.selectedDesign)
-  const imageInputRef = useRef(null)
-  const logoInputRef = useRef(null)
   const [formData, setFormData] = useState(initialState.formData)
 
   // Ensure we have 5 campaigns when the component mounts
@@ -181,250 +178,6 @@ const EmailSignatureCreator = () => {
     setFormData(updatedFormData)
     saveToLocalStorage(updatedFormData)
   }
-
-  const handleImageUpload = (e, type) => {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (event) => {
-        const updatedFormData = { ...formData, [type]: event.target.result }
-        setFormData(updatedFormData)
-        saveToLocalStorage(updatedFormData)
-      }
-      reader.readAsDataURL(file)
-    }
-  }
-
-  const removeImage = (type) => {
-    const updatedFormData = { ...formData, [type]: null }
-    setFormData(updatedFormData)
-    saveToLocalStorage(updatedFormData)
-  }
-
-  const triggerImageUpload = () => {
-    imageInputRef.current.click()
-  }
-
-  const handleLogoUpload = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        setFormData((prevState) => ({
-          ...prevState,
-          logo: e.target.result,
-        }))
-      }
-      reader.readAsDataURL(file)
-    }
-  }
-
-  const triggerLogoUpload = () => {
-    logoInputRef.current.click()
-  }
-
-  const removeLogo = () => {
-    const updatedFormData = { ...formData, logo: null }
-    setFormData(updatedFormData)
-    saveToLocalStorage(updatedFormData)
-  }
-
-  // Campaign banner functions
-  const handleCampaignNameChange = (id, value) => {
-    const updatedFormData = {
-      ...formData,
-      campaigns: formData.campaigns.map((campaign) =>
-        campaign.id === id ? { ...campaign, name: value } : campaign
-      ),
-    }
-    setFormData(updatedFormData)
-    saveToLocalStorage(updatedFormData)
-  }
-
-  const handleCampaignImageUpload = (e, id) => {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (event) => {
-        const updatedFormData = {
-          ...formData,
-          campaigns: formData.campaigns.map((campaign) =>
-            campaign.id === id ? { ...campaign, image: event.target.result } : campaign
-          ),
-        }
-        setFormData(updatedFormData)
-        saveToLocalStorage(updatedFormData)
-      }
-      reader.readAsDataURL(file)
-    }
-  }
-
-  const handleCampaignExpiryChange = (id, value) => {
-    const updatedFormData = {
-      ...formData,
-      campaigns: formData.campaigns.map((campaign) =>
-        campaign.id === id ? { ...campaign, expiryDate: value } : campaign
-      ),
-    }
-    setFormData(updatedFormData)
-    saveToLocalStorage(updatedFormData)
-  }
-
-  const handleCampaignStartDateChange = (id, value) => {
-    const updatedFormData = {
-      ...formData,
-      campaigns: formData.campaigns.map((campaign) =>
-        campaign.id === id ? { ...campaign, startDate: value } : campaign
-      ),
-    }
-    setFormData(updatedFormData)
-    saveToLocalStorage(updatedFormData)
-  }
-
-  const handleCampaignLinkChange = (campaignId, linkIndex, field, value) => {
-    const updatedFormData = {
-      ...formData,
-      campaigns: formData.campaigns.map((campaign) => {
-        if (campaign.id === campaignId) {
-          const updatedLinks = [...campaign.links]
-          updatedLinks[linkIndex] = {
-            ...updatedLinks[linkIndex],
-            [field]: value
-          }
-          return { ...campaign, links: updatedLinks }
-        }
-        return campaign
-      })
-    }
-    setFormData(updatedFormData)
-    saveToLocalStorage(updatedFormData)
-  }
-
-  const removeCampaignImage = (id) => {
-    const updatedFormData = {
-      ...formData,
-      campaigns: formData.campaigns.map((campaign) =>
-        campaign.id === id ? { ...campaign, image: null } : campaign
-      ),
-    }
-    setFormData(updatedFormData)
-    saveToLocalStorage(updatedFormData)
-  }
-
-  const toggleCampaignActive = (id) => {
-    const campaign = formData.campaigns.find((c) => c.id === id)
-    
-    if (!campaign || !campaign.image || isCampaignExpired(campaign.expiryDate, campaign.startDate)) {
-      return
-    }
-    
-    const updatedFormData = {
-      ...formData,
-      campaigns: formData.campaigns.map((c) =>
-        c.id === id ? { ...c, active: !c.active } : c
-      ),
-    }
-    setFormData(updatedFormData)
-    saveToLocalStorage(updatedFormData)
-  }
-
-  // Check if campaign is expired or not yet started
-  const isCampaignExpired = (expiryDate, startDate) => {
-    const today = new Date();
-    
-    // Check if campaign has not started yet
-    if (startDate) {
-      const start = new Date(startDate);
-      if (today < start) return true; // Not yet started
-    }
-    
-    // Check if campaign has expired
-    if (expiryDate) {
-      const expiry = new Date(expiryDate);
-      if (today > expiry) return true; // Expired
-    }
-    
-    return false; // Campaign is active
-  }
-
-  // Get active campaigns
-  const getActiveCampaigns = () => {
-    const activeCampaigns = formData.campaigns.filter(campaign => 
-      campaign.active && campaign.image && !isCampaignExpired(campaign.expiryDate, campaign.startDate)
-    )
-    return activeCampaigns
-  }
-
-  // Design templates - expanded with more aesthetic options
-  const designTemplates = [
-    {
-      id: "default",
-      name: "Default Blue",
-      color: "#3498db",
-      layout: "standard",
-    },
-    {
-      id: "dark",
-      name: "Dark Professional",
-      color: "#704242",
-      layout: "standard",
-    },
-    {
-      id: "minimal",
-      name: "Minimal Gray",
-      color: "#7f8c8d",
-      layout: "standard",
-    },
-    {
-      id: "vibrant",
-      name: "Vibrant Purple",
-      color: "#9b59b6",
-      layout: "standard",
-    },
-    {
-      id: "green",
-      name: "Natural Green",
-      color: "#27ae60",
-      layout: "standard",
-    },
-    {
-      id: "modern",
-      name: "Modern Split",
-      color: "#e74c3c",
-      layout: "split",
-    },
-    {
-      id: "elegant",
-      name: "Elegant Gold",
-      color: "#f39c12",
-      layout: "centered",
-    },
-    {
-      id: "clean",
-      name: "Clean Teal",
-      color: "#16a085",
-      layout: "horizontal",
-    },
-    {
-      id: "gradient",
-      name: "Gradient Blue",
-      color: "brown",
-      gradient: "linear-gradient(135deg, #3498db, #2980b9)",
-      layout: "standard",
-    },
-    {
-      id: "bordered",
-      name: "Bordered Card",
-      color: "#8e44ad",
-      layout: "bordered",
-    },
-    {
-      id: "banner",
-      name: "Banner Design",
-      color: "#34495e",
-      layout: "banner",
-    },
-  ]
 
   // Function to generate HTML content of the signature
   const generateSignatureHTML = () => {
@@ -500,146 +253,43 @@ const EmailSignatureCreator = () => {
     saveToLocalStorage(null, tab)
   }
 
-  // Update the design selection to save to localStorage
-  const handleDesignSelect = (designId) => {
-    setSelectedDesign(designId)
-    saveToLocalStorage(null, null, designId)
-  }
-
   // Render tab content based on active tab
   const renderTabContent = () => {
     switch (activeTab) {
       case "Personal Info":
-        return <PersonalInfoTab formData={formData} handleInputChange={handleInputChange} />
+        return <PersonalInfoTab formData={formData} saveToLocalStorage={saveToLocalStorage} />
       case "Images":
-        return <ImagesTab formData={formData} handleImageUpload={handleImageUpload} removeImage={removeImage} imageInputRef={imageInputRef} logoInputRef={logoInputRef} handleLogoUpload={handleLogoUpload} removeLogo={removeLogo} />
+        return <ImagesTab formData={formData} saveToLocalStorage={saveToLocalStorage} />
       case "Social":
-        return <SocialTab formData={formData} handleInputChange={handleInputChange} />
+        return <SocialTab formData={formData} saveToLocalStorage={saveToLocalStorage} />
       case "Design":
-        return <DesignTab designTemplates={designTemplates} selectedDesign={selectedDesign} handleDesignSelect={handleDesignSelect} />
+        return <DesignTab 
+          selectedDesign={selectedDesign} 
+          saveToLocalStorage={(newFormData, newActiveTab, newSelectedDesign) => {
+            if (newSelectedDesign && newSelectedDesign !== selectedDesign) {
+              setSelectedDesign(newSelectedDesign);
+            }
+            saveToLocalStorage(newFormData, newActiveTab, newSelectedDesign);
+          }} 
+        />
       case "Banner":
-        return <BannerTab formData={formData} handleCampaignNameChange={handleCampaignNameChange} handleCampaignImageUpload={handleCampaignImageUpload} handleCampaignExpiryChange={handleCampaignExpiryChange} handleCampaignStartDateChange={handleCampaignStartDateChange} handleCampaignLinkChange={handleCampaignLinkChange} removeCampaignImage={removeCampaignImage} toggleCampaignActive={toggleCampaignActive} isCampaignExpired={isCampaignExpired} getActiveCampaigns={getActiveCampaigns} />
+        return <BannerTab formData={formData} saveToLocalStorage={saveToLocalStorage} />
       case "Disclaimer":
-        return <DisclaimerTab formData={formData} handleInputChange={handleInputChange} />
+        return <DisclaimerTab formData={formData} saveToLocalStorage={saveToLocalStorage} />
       default:
         return null
     }
   }
 
-  // Get style based on selected design
-  const getDesignStyle = () => {
-    const design = designTemplates.find((d) => d.id === selectedDesign)
+  const designStyle = getDesignStyle(selectedDesign)
 
-    const baseStyle = {
-      nameColor: design.color,
-      accentColor: design.color,
-      backgroundColor: selectedDesign === "dark" ? "#2c3e50" : "#f0f0f0",
-      textColor: selectedDesign === "dark" ? "white" : "#333",
-      borderStyle: selectedDesign === "minimal" ? "none" : "1px solid #e6e6e6",
-      boxShadow: selectedDesign === "minimal" ? "none" : "0 2px 10px rgba(0, 0, 0, 0.05)",
-      gradient: design.gradient || null,
-      layout: design.layout,
-    }
-
-    // Add specific styling based on layout
-    if (design.layout === "split") {
-      return {
-        ...baseStyle,
-        containerStyle: {
-          display: "flex",
-          background: baseStyle.backgroundColor,
-        },
-        sidebarStyle: {
-          width: "120px",
-          backgroundColor: design.color,
-          padding: "20px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          color: "white",
-        },
-        contentStyle: {
-          flex: 1,
-          padding: "20px",
-        },
-      }
-    }
-
-    if (design.layout === "bordered") {
-      return {
-        ...baseStyle,
-        borderStyle: `3px solid ${design.color}`,
-        innerPadding: "16px",
-      }
-    }
-
-    if (design.layout === "horizontal") {
-      return {
-        ...baseStyle,
-        footerStyle: {
-          backgroundColor: design.color,
-          marginTop: "16px",
-          padding: "12px",
-          color: "white",
-          borderRadius: "0 0 8px 8px",
-        },
-      }
-    }
-
-    if (design.layout === "centered") {
-      return {
-        ...baseStyle,
-        textAlign: "center",
-        dividerStyle: {
-          width: "60%",
-          margin: "12px auto",
-          height: "2px",
-          background: design.color,
-        },
-      }
-    }
-
-    return baseStyle
-  }
-
-  const designStyle = getDesignStyle()
-
-  // Render social icons if URLs are provided
-  const renderSocialIcons = () => {
-    const hasAnySocial =
-      formData.linkedin || formData.twitter || formData.instagram || formData.facebook || formData.youtube || formData.portfolio
-    if (!hasAnySocial) return null
-
-    return (
-      <div className="social-icons">
-        {formData.linkedin && (
-          <span className="social-icon linkedin">
-            <FaLinkedin />
-          </span>
-        )}
-        {formData.twitter && <span className="social-icon twitter">𝕏</span>}
-        {formData.instagram && (
-          <span className="social-icon instagram">
-            <FaInstagram />
-          </span>
-        )}
-        {formData.facebook && (
-          <span className="social-icon facebook">
-            <FaFacebook />
-          </span>
-        )}
-        {formData.youtube && (
-          <span className="social-icon youtube">
-            <FaYoutube />
-          </span>
-        )}
-        {formData.portfolio && (
-          <span className="social-icon portfolio">
-            🔗
-          </span>
-        )}
-      </div>
-    )
+  // Get active campaigns function - needed in EmailSignature.jsx
+  const getActiveCampaigns = () => {
+    return formData.campaigns.filter(campaign => 
+      campaign.active && campaign.image && 
+      !(campaign.startDate && new Date() < new Date(campaign.startDate)) && 
+      !(campaign.expiryDate && new Date() > new Date(campaign.expiryDate))
+    );
   }
 
   // Render the signature based on the selected design
@@ -656,13 +306,6 @@ const EmailSignatureCreator = () => {
                 <img src={formData.profileImage || "/placeholder.svg"} alt={formData.name} className="profile-image" />
               </div>
             )}
-            <h3 className="preview-name centered" style={{ color: "white" }}>
-              {formData.name}
-            </h3>
-            <p className="preview-job centered" style={{ color: "rgba(255,255,255,0.8)" }}>
-              {formData.jobTitle}
-            </p>
-            <div className="sidebar-social-icons">{renderSocialIcons()}</div>
             {formData.logo && (
               <div className="logo-container" style={{ marginTop: "10px" }}>
                 <img
@@ -676,6 +319,14 @@ const EmailSignatureCreator = () => {
                 />
               </div>
             )}
+            <h3 className="preview-name centered" style={{ color: "white" }}>
+              {formData.name}
+            </h3>
+            <p className="preview-job centered" style={{ color: "rgba(255,255,255,0.8)" }}>
+              {formData.jobTitle}
+            </p>
+            <div className="sidebar-social-icons">{renderSocialIcons(formData)}</div>
+            
           </div>
           <div style={designStyle.contentStyle} className="signature-content">
             <p className="preview-company">{formData.company}</p>
@@ -805,7 +456,7 @@ const EmailSignatureCreator = () => {
               </p>
             )}
           </div>
-          <div className="centered-social">{renderSocialIcons()}</div>
+          <div className="centered-social">{renderSocialIcons(formData)}</div>
           
           {(getActiveCampaigns().length > 0 || formData.banner) && (
             <div className="banner-container" style={{ display: "none" }}>
@@ -898,7 +549,7 @@ const EmailSignatureCreator = () => {
                   {formData.email}
                   </p>
               </div>
-              <div className="contact-right">{renderSocialIcons()}</div>
+              <div className="contact-right">{renderSocialIcons(formData)}</div>
             </div>
             
             {(getActiveCampaigns().length > 0 || formData.banner) && (
@@ -908,7 +559,7 @@ const EmailSignatureCreator = () => {
             )}
           </div>
           <div style={designStyle.footerStyle} className="horizontal-footer">
-            <div className="footer-social">{renderSocialIcons()}</div>
+            <div className="footer-social">{renderSocialIcons(formData)}</div>
           </div>
         </div>
       )
@@ -1012,7 +663,7 @@ const EmailSignatureCreator = () => {
                   </p>
                 )}
               </div>
-              <div className="contact-right">{renderSocialIcons()}</div>
+              <div className="contact-right">{renderSocialIcons(formData)}</div>
             </div>
             
             {(getActiveCampaigns().length > 0 || formData.banner) && (
@@ -1119,7 +770,7 @@ const EmailSignatureCreator = () => {
               </p>
             )}
           </div>
-          <div className="contact-right">{renderSocialIcons()}</div>
+          <div className="contact-right">{renderSocialIcons(formData)}</div>
         </div>
         {(getActiveCampaigns().length > 0 || formData.banner) && (
           <div className="banner-container" style={{ display: "none" }}>
@@ -1215,7 +866,7 @@ const EmailSignatureCreator = () => {
                 fontSize: "12px",
                 color: "#666",
                 paddingTop: "15px",
-                padding: "15px",
+            
                 borderRadius: "4px",
               }}
             >

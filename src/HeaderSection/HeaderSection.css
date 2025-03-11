@@ -45,8 +45,12 @@
   @media (max-width: 480px) {
     .hero-h1 {
       font-size: 48px;
-      line-height: 48px;
     }
-  
-    
+   
   }
+  @media (max-width: 576px) {
+    .container{
+      padding: 0;
+    }
+  }
+  

@@ -2,7 +2,14 @@ import React from 'react';
 import RichTextEditor from '../RichTextEditor';
 import './DisclaimerTab.css';
 
-const DisclaimerTab = ({ formData, handleInputChange }) => {
+const DisclaimerTab = ({ formData, saveToLocalStorage }) => {
+  // Handle input changes for disclaimer
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const updatedFormData = { ...formData, [name]: value };
+    saveToLocalStorage(updatedFormData);
+  };
+
   return (
     <div className="disclaimer-tab-form">
       <div className="disclaimer-tab-section">

@@ -223,4 +223,103 @@
 .banner-tab-toggle-btn.disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Responsive styles for BannerTab */
+@media (max-width: 1200px) {
+  .banner-tab-image-section {
+    width: 50%;
+  }
+}
+
+@media (max-width: 992px) {
+  .banner-tab-image-section {
+    width: 60%;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-tab-campaign-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .banner-tab-form-group {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  .banner-tab-image-section {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .banner-tab-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .banner-tab-status {
+    margin-bottom: 10px;
+  }
+  
+  .banner-tab-toggle-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .banner-tab-campaign-item {
+    padding: 10px;
+  }
+  
+  .banner-tab-link-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .banner-tab-link-number {
+    margin-bottom: 5px;
+    display: none;
+  }
+  
+  .banner-tab-link-text-input,
+  .banner-tab-link-url-input {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+  
+  .banner-tab-link-area-label {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banners-outside-preview {
+    margin-top: -38px !important;
+  }
+  .banner-tab-heading {
+    font-size: 16px;
+  }
+  
+  .banner-tab-upload-placeholder {
+    height: 80px;
+  }
+  
+  .banner-tab-upload-icon {
+    font-size: 20px;
+  }
+  
+  .banner-tab-form-group label {
+    font-size: 13px;
+  }
+  
+  .banner-tab-form-group input {
+    padding: 6px;
+    font-size: 13px;
+  }
 } 

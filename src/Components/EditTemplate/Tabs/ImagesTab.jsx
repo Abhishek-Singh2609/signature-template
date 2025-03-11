@@ -1,8 +1,60 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { FaTimes } from "react-icons/fa";
 import './ImagesTab.css';
 
-const ImagesTab = ({ formData, imageInputRef, logoInputRef, handleImageUpload, removeImage, removeLogo }) => {
+const ImagesTab = ({ formData, saveToLocalStorage }) => {
+  // Create refs for file inputs
+  const imageInputRef = useRef(null);
+  const logoInputRef = useRef(null);
+
+  // Handle image upload for profile image and logo
+  const handleImageUpload = (e, type) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const updatedFormData = { ...formData, [type]: event.target.result };
+        saveToLocalStorage(updatedFormData);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Remove image (profile or banner)
+  const removeImage = (type) => {
+    const updatedFormData = { ...formData, [type]: null };
+    saveToLocalStorage(updatedFormData);
+  };
+
+  // Trigger profile image upload dialog
+  const triggerImageUpload = () => {
+    imageInputRef.current.click();
+  };
+
+  // Handle logo upload
+  const handleLogoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const updatedFormData = { ...formData, logo: e.target.result };
+        saveToLocalStorage(updatedFormData);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Trigger logo upload dialog
+  const triggerLogoUpload = () => {
+    logoInputRef.current.click();
+  };
+
+  // Remove logo
+  const removeLogo = () => {
+    const updatedFormData = { ...formData, logo: null };
+    saveToLocalStorage(updatedFormData);
+  };
+
   return (
     <div className="images-tab-form">
       <div className="images-tab-section">
@@ -16,7 +68,7 @@ const ImagesTab = ({ formData, imageInputRef, logoInputRef, handleImageUpload, r
               </button>
             </div>
           ) : (
-            <div className="images-tab-upload-placeholder" onClick={() => imageInputRef.current.click()}>
+            <div className="images-tab-upload-placeholder" onClick={triggerImageUpload}>
               <span className="images-tab-upload-icon">📷</span>
               <span>Upload</span>
             </div>
@@ -38,12 +90,12 @@ const ImagesTab = ({ formData, imageInputRef, logoInputRef, handleImageUpload, r
           {formData.logo ? (
             <div className="images-tab-preview-container">
               <img src={formData.logo || "/placeholder.svg"} alt="Logo" className="images-tab-preview" />
-              <button className="images-tab-remove-btn" onClick={() => removeLogo()}>
+              <button className="images-tab-remove-btn" onClick={removeLogo}>
                 <FaTimes size={12} />
               </button>
             </div>
           ) : (
-            <div className="images-tab-upload-placeholder" onClick={() => logoInputRef.current.click()}>
+            <div className="images-tab-upload-placeholder" onClick={triggerLogoUpload}>
               <span className="images-tab-upload-icon">📷</span>
               <span>Upload</span>
             </div>
@@ -51,7 +103,7 @@ const ImagesTab = ({ formData, imageInputRef, logoInputRef, handleImageUpload, r
           <input
             type="file"
             ref={logoInputRef}
-            onChange={(e) => handleImageUpload(e, "logo")}
+            onChange={handleLogoUpload}
             accept="image/*"
             className="images-tab-hidden-input"
           />
