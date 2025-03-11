@@ -11,30 +11,32 @@ const renderSocialIcons = (formData) => {
   return (
     <div className="social-icons">
       {formData.linkedin && (
-        <span className="social-icon linkedin">
+        <a href={formData.linkedin} target="_blank" rel="noopener noreferrer" className="social-icon linkedin">
           <FaLinkedin />
-        </span>
+        </a>
       )}
-      {formData.twitter && <span className="social-icon twitter">𝕏</span>}
+      {formData.twitter && (
+        <a href={formData.twitter} target="_blank" rel="noopener noreferrer" className="social-icon twitter">𝕏</a>
+      )}
       {formData.instagram && (
-        <span className="social-icon instagram">
+        <a href={formData.instagram} target="_blank" rel="noopener noreferrer" className="social-icon instagram">
           <FaInstagram />
-        </span>
+        </a>
       )}
       {formData.facebook && (
-        <span className="social-icon facebook">
+        <a href={formData.facebook} target="_blank" rel="noopener noreferrer" className="social-icon facebook">
           <FaFacebook />
-        </span>
+        </a>
       )}
       {formData.youtube && (
-        <span className="social-icon youtube">
+        <a href={formData.youtube} target="_blank" rel="noopener noreferrer" className="social-icon youtube">
           <FaYoutube />
-        </span>
+        </a>
       )}
       {formData.portfolio && (
-        <span className="social-icon portfolio">
+        <a href={formData.portfolio} target="_blank" rel="noopener noreferrer" className="social-icon portfolio">
           🔗
-        </span>
+        </a>
       )}
     </div>
   );
