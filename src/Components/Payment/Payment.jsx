@@ -211,10 +211,10 @@ const PaymentPage = () => {
     <>
     <div className='text-center mt-5'>
     <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 hero-h1">
-         Your Subscription is All Set!
+         Your <span className='subscription-text' >Subscription</span> is All Set!
           </h1>
     </div>
-    <div className="success-container">
+    <div className="success-container my-5">
       <div className="success-card">
         <div className="success-icon">&#10004;</div>
         <h2>Payment Successful!</h2>

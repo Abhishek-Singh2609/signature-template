@@ -71,8 +71,8 @@
   .success-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    /* align-items: center; */
+    /* height: 100vh; */
   }
   
   .success-card {
@@ -115,4 +115,6 @@
   .success-card button:hover {
     background-color: #218838;
   }
-  
+  .subscription-text{
+    color: #F6470e;
+  }
