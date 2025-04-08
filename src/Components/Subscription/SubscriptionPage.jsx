@@ -250,7 +250,7 @@ function SubscriptionPage() {
               <span className="price-period">user/ month</span>
             </div>
             <p className="plan-description">Create professional and consistent signatures for your organization.</p>
-            <button className="cta-button" onClick={() => handleSubscribe("price_1RBfyiAucVCGtuFGRrVhJJIV")}>
+            <button className="cta-button" onClick={() => handleSubscribe("price_1RBhCIAucVCGtuFGn4AVqGf3")}>
               Start free trial
             </button>
             <div className="features-list">
