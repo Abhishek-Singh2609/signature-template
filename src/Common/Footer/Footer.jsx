@@ -118,7 +118,7 @@ const Footer = () => {
                 <div class="bottom-row">
                     <div class="copyright">
                         {/* <img src="" alt="Logo" class="logo"> */}
-                        <span>© 2025 Exclaimer. All rights reserved.</span>
+                        <span>© 2025 Agile. All rights reserved.</span>
                     </div>
                     <div class="legal-links">
                         <a href="#">Terms of service</a>
