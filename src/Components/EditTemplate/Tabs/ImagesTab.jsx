@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 import { FaTimes } from "react-icons/fa";
-import './ImagesTab.css';
+import "./ImagesTab.css";
 
-const ImagesTab = ({ formData, saveToLocalStorage }) => {
+const ImagesTab = ({ formData, handleFormDataUpdate }) => {
   // Create refs for file inputs
   const imageInputRef = useRef(null);
   const logoInputRef = useRef(null);
@@ -13,8 +13,7 @@ const ImagesTab = ({ formData, saveToLocalStorage }) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        const updatedFormData = { ...formData, [type]: event.target.result };
-        saveToLocalStorage(updatedFormData);
+        handleFormDataUpdate({ [type]: event.target.result });
       };
       reader.readAsDataURL(file);
     }
@@ -22,8 +21,7 @@ const ImagesTab = ({ formData, saveToLocalStorage }) => {
 
   // Remove image (profile or banner)
   const removeImage = (type) => {
-    const updatedFormData = { ...formData, [type]: null };
-    saveToLocalStorage(updatedFormData);
+    handleFormDataUpdate({ [type]: null });
   };
 
   // Trigger profile image upload dialog
@@ -37,8 +35,7 @@ const ImagesTab = ({ formData, saveToLocalStorage }) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const updatedFormData = { ...formData, logo: e.target.result };
-        saveToLocalStorage(updatedFormData);
+        handleFormDataUpdate({ logo: e.target.result });
       };
       reader.readAsDataURL(file);
     }
@@ -51,8 +48,7 @@ const ImagesTab = ({ formData, saveToLocalStorage }) => {
 
   // Remove logo
   const removeLogo = () => {
-    const updatedFormData = { ...formData, logo: null };
-    saveToLocalStorage(updatedFormData);
+    handleFormDataUpdate({ logo: null });
   };
 
   return (
@@ -62,13 +58,23 @@ const ImagesTab = ({ formData, saveToLocalStorage }) => {
         <div className="images-tab-upload-container">
           {formData.profileImage ? (
             <div className="images-tab-preview-container">
-              <img src={formData.profileImage || "/placeholder.svg"} alt="Profile" className="images-tab-preview" />
-              <button className="images-tab-remove-btn" onClick={() => removeImage("profileImage")}>
+              <img
+                src={formData.profileImage || "/placeholder.svg"}
+                alt="Profile"
+                className="images-tab-preview"
+              />
+              <button
+                className="images-tab-remove-btn"
+                onClick={() => removeImage("profileImage")}
+              >
                 <FaTimes size={12} />
               </button>
             </div>
           ) : (
-            <div className="images-tab-upload-placeholder" onClick={triggerImageUpload}>
+            <div
+              className="images-tab-upload-placeholder"
+              onClick={triggerImageUpload}
+            >
               <span className="images-tab-upload-icon">📷</span>
               <span>Upload</span>
             </div>
@@ -81,7 +87,9 @@ const ImagesTab = ({ formData, saveToLocalStorage }) => {
             className="images-tab-hidden-input"
           />
         </div>
-        <p className="images-tab-tip">Recommended: Image at least should be 100x100px</p>
+        <p className="images-tab-tip">
+          Recommended: Image at least should be 100x100px
+        </p>
       </div>
 
       <div className="images-tab-section">
@@ -89,13 +97,20 @@ const ImagesTab = ({ formData, saveToLocalStorage }) => {
         <div className="images-tab-upload-container">
           {formData.logo ? (
             <div className="images-tab-preview-container">
-              <img src={formData.logo || "/placeholder.svg"} alt="Logo" className="images-tab-preview" />
+              <img
+                src={formData.logo || "/placeholder.svg"}
+                alt="Logo"
+                className="images-tab-preview"
+              />
               <button className="images-tab-remove-btn" onClick={removeLogo}>
                 <FaTimes size={12} />
               </button>
             </div>
           ) : (
-            <div className="images-tab-upload-placeholder" onClick={triggerLogoUpload}>
+            <div
+              className="images-tab-upload-placeholder"
+              onClick={triggerLogoUpload}
+            >
               <span className="images-tab-upload-icon">📷</span>
               <span>Upload</span>
             </div>
@@ -108,10 +123,12 @@ const ImagesTab = ({ formData, saveToLocalStorage }) => {
             className="images-tab-hidden-input"
           />
         </div>
-        <p className="images-tab-tip">Recommended: Logo should be at least 100x100px</p>
+        <p className="images-tab-tip">
+          Recommended: Logo should be at least 100x100px
+        </p>
       </div>
     </div>
   );
 };
 
-export default ImagesTab; 
+export default ImagesTab;

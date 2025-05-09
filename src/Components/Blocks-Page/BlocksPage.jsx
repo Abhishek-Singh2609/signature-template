@@ -18,9 +18,9 @@ function BlocksPage() {
   const [hoveredCard, setHoveredCard] = useState(null);
   const navigate = useNavigate(); 
 
-  const handleCardClick = (signature) => {
-    navigate(`/subscription`, { state: { signature } }); 
-  };
+  // const handleCardClick = (signature) => {
+  //   navigate(`/subscription`, { state: { signature } }); 
+  // };
 
   return (
     <>

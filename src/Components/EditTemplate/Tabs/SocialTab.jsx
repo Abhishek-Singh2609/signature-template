@@ -1,40 +1,83 @@
-import React from 'react';
-import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaTwitter } from "react-icons/fa";
-import './SocialTab.css';
+import React from "react";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaYoutube,
+  FaTwitter,
+} from "react-icons/fa";
+import "./SocialTab.css";
 
 // Render social icons if URLs are provided - exported as a standalone function
 const renderSocialIcons = (formData) => {
   const hasAnySocial =
-    formData.linkedin || formData.twitter || formData.instagram || formData.facebook || formData.youtube || formData.portfolio;
+    formData.linkedin ||
+    formData.twitter ||
+    formData.instagram ||
+    formData.facebook ||
+    formData.youtube ||
+    formData.portfolio;
   if (!hasAnySocial) return null;
 
   return (
     <div className="social-icons">
       {formData.linkedin && (
-        <a href={formData.linkedin} target="_blank" rel="noopener noreferrer" className="social-icon linkedin">
+        <a
+          href={formData.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="social-icon linkedin"
+        >
           <FaLinkedin />
         </a>
       )}
       {formData.twitter && (
-        <a href={formData.twitter} target="_blank" rel="noopener noreferrer" className="social-icon twitter">𝕏</a>
+        <a
+          href={formData.twitter}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="social-icon twitter"
+        >
+          𝕏
+        </a>
       )}
       {formData.instagram && (
-        <a href={formData.instagram} target="_blank" rel="noopener noreferrer" className="social-icon instagram">
+        <a
+          href={formData.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="social-icon instagram"
+        >
           <FaInstagram />
         </a>
       )}
       {formData.facebook && (
-        <a href={formData.facebook} target="_blank" rel="noopener noreferrer" className="social-icon facebook">
+        <a
+          href={formData.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="social-icon facebook"
+        >
           <FaFacebook />
         </a>
       )}
       {formData.youtube && (
-        <a href={formData.youtube} target="_blank" rel="noopener noreferrer" className="social-icon youtube">
+        <a
+          href={formData.youtube}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="social-icon youtube"
+        >
           <FaYoutube />
         </a>
       )}
       {formData.portfolio && (
-        <a href={formData.portfolio} target="_blank" rel="noopener noreferrer" className="social-icon portfolio">
+        <a
+          href={formData.portfolio}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="social-icon portfolio"
+        >
           🔗
         </a>
       )}
@@ -42,13 +85,8 @@ const renderSocialIcons = (formData) => {
   );
 };
 
-const SocialTab = ({ formData, saveToLocalStorage }) => {
-  // Handle input changes for social fields
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    const updatedFormData = { ...formData, [name]: value };
-    saveToLocalStorage(updatedFormData);
-  };
+const SocialTab = ({ formData, handleInputChange, handleFormDataUpdate }) => {
+  // We'll now use the provided handleInputChange directly
 
   return (
     <div className="social-tab-form">
@@ -111,7 +149,7 @@ const SocialTab = ({ formData, saveToLocalStorage }) => {
           className="social-input"
         />
       </div>
-      
+
       <div className="social-form-group">
         <label className="social-label" htmlFor="youtube">
           <FaYoutube size={25} className="social-icon-youtube" />
@@ -126,7 +164,7 @@ const SocialTab = ({ formData, saveToLocalStorage }) => {
           className="social-input"
         />
       </div>
-      
+
       <div className="social-form-group">
         <label className="social-label" htmlFor="portfolio">
           <span className="social-icon-portfolio">🔗</span>
@@ -146,4 +184,4 @@ const SocialTab = ({ formData, saveToLocalStorage }) => {
 };
 
 export { renderSocialIcons };
-export default SocialTab; 
+export default SocialTab;

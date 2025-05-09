@@ -82,6 +82,7 @@ const Footer = () => {
                         <li><a href="#">Press</a></li>
                         <li><a href="#">Careers</a></li>
                         <li><a href="#">Awards</a></li>
+                        <li><a href="/subscription">Subscription Plans</a></li>
                     </ul>
                 </div>
 

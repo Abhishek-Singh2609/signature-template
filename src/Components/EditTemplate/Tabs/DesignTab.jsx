@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './DesignTab.css';
+import React, { useState } from "react";
+import "./DesignTab.css";
 
 // Design templates - expanded with more aesthetic options
 const designTemplates = [
@@ -82,7 +82,8 @@ const getDesignStyle = (selectedDesign) => {
     backgroundColor: selectedDesign === "dark" ? "#2c3e50" : "#f0f0f0",
     textColor: selectedDesign === "dark" ? "white" : "#333",
     borderStyle: selectedDesign === "minimal" ? "none" : "1px solid #e6e6e6",
-    boxShadow: selectedDesign === "minimal" ? "none" : "0 2px 10px rgba(0, 0, 0, 0.05)",
+    boxShadow:
+      selectedDesign === "minimal" ? "none" : "0 2px 10px rgba(0, 0, 0, 0.05)",
     gradient: design.gradient || null,
     layout: design.layout,
   };
@@ -148,26 +149,34 @@ const getDesignStyle = (selectedDesign) => {
   return baseStyle;
 };
 
-const DesignTab = ({ selectedDesign, saveToLocalStorage }) => {
+const DesignTab = ({ selectedDesign, handleDesignChange }) => {
   // Local state to track the selected design
-  const [localSelectedDesign, setLocalSelectedDesign] = useState(selectedDesign);
+  const [localSelectedDesign, setLocalSelectedDesign] =
+    useState(selectedDesign);
 
-  // Update the design selection to save to localStorage
+  // Update the design selection
   const handleDesignSelect = (designId) => {
     setLocalSelectedDesign(designId);
-    saveToLocalStorage(null, null, designId);
+    handleDesignChange(designId);
   };
 
   return (
     <div className="design-tab-container">
-      <p className="design-tab-intro">Select a design template for your email signature:</p>
+      <p className="design-tab-intro">
+        Select a design template for your email signature:
+      </p>
       <div className="design-tab-grid">
         {designTemplates.map((template) => (
           <div
             key={template.id}
-            className={`design-tab-card ${localSelectedDesign === template.id ? "selected" : ""}`}
+            className={`design-tab-card ${
+              localSelectedDesign === template.id ? "selected" : ""
+            }`}
             onClick={() => handleDesignSelect(template.id)}
-            style={{ borderColor: localSelectedDesign === template.id ? template.color : "#ddd" }}
+            style={{
+              borderColor:
+                localSelectedDesign === template.id ? template.color : "#ddd",
+            }}
           >
             <div
               className="design-tab-preview"
@@ -242,4 +251,4 @@ const DesignTab = ({ selectedDesign, saveToLocalStorage }) => {
 };
 
 export { designTemplates, getDesignStyle };
-export default DesignTab; 
+export default DesignTab;
